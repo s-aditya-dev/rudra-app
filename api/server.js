@@ -26,7 +26,7 @@ const connect = async () => {
 
 app.use(
   cors({
-    origin: "https://rudra-app.vercel.app",
+    origin: "https://rudra-app-adityas-projects-a46e79b7.vercel.app/",
     credentials: true,
   })
 );
