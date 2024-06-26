@@ -1,0 +1,152 @@
+nav{
+    margin-top: 1.4rem;
+}
+
+nav{
+    position: relative;
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+}
+
+nav button{
+    display: none;
+}
+
+nav h1{
+    position: absolute;
+    left: 0;
+}
+
+nav .calculator {
+    background-color: var(--color-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2.5rem;
+    width: 2.5rem;
+    cursor: pointer;
+    border-radius: var(--border-radius-1);
+}
+
+nav .calculator.active{
+    background-color: var(--color-primary);
+    color: white
+}
+
+nav .dark-mode{
+    background-color: var(--color-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 1.6rem;
+    width: 4.2rem;
+    cursor: pointer;
+    border-radius: var(--border-radius-1);
+}
+
+nav .dark-mode span{
+    font-size: 1.2rem;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+nav .dark-mode span.active{
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: var(--border-radius-1);
+}
+
+nav .profile{
+    display: flex;
+    gap: 2rem;
+    text-align: right;
+}
+
+nav .profile .profile-photo{
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+nav .user-profile{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 1rem;
+    background-color: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+nav .user-profile:hover{
+    box-shadow: none;
+}
+
+nav .user-profile img{
+    width: 11rem;
+    height: auto;
+    margin-bottom: 0.8rem;
+    border-radius: 50%;
+}
+
+nav .user-profile h2{
+    margin-bottom: 0.2rem;
+}
+
+@media screen and (max-width: 768px) {
+
+    nav{
+        width: 94%;
+        margin: 0 auto 4rem;
+    }
+
+    nav{
+        position: fixed;
+        top: 0;
+        left: 0;
+        align-items: center;
+        background-color: var(--color-white);
+        padding: 0 var(--padding-1);
+        height: 4.6rem;
+        width: 100%;
+        z-index: 2;
+        box-shadow: 0 1rem 1rem var(--color-light);
+        margin: 0;
+    }
+
+    nav h1{
+        display: none;
+    }
+
+    /* nav .dark-mode{
+        width: 4.4rem;
+        position: absolute;
+        left: 66%;
+    } */
+
+    nav .profile .info{
+        display: none;
+    }
+
+    nav button{
+        display: inline-block;
+        background-color: transparent;
+        cursor: pointer;
+        color: var(--color-dark);
+        position: absolute;
+        left: 1rem;
+    }
+
+    nav button span{
+        font-size: 2rem;
+    }
+
+}

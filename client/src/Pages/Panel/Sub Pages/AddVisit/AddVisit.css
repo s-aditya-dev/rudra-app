@@ -1,0 +1,146 @@
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top:0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* AddVisit.css */
+.visit-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transform-origin: center center;
+  max-width: 420px;
+  min-height: 400px;
+  padding: 40px 35px 20px 35px;
+  background: var(--color-white);
+  box-shadow: var(--box-shadow);
+  border: 2px solid var(--color-dark);
+  border-radius: var(--border-radius-1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all ease-in 0.3s;
+  animation: scaleIn 0.3s ease-in forwards;
+}
+
+@keyframes scaleIn {
+
+  0%{
+    transform: translate(-50%, -50%) scale(0);
+  }
+  
+  100%{
+    transform: translate(-50%, -50%) scale(1);
+  }
+  
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.visit-form label {
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+.visit-form h2 {
+  margin-bottom: 20px;
+}
+
+.visit-form p {
+  font-weight: 600;
+  color: red;
+  padding: 5px 0;
+}
+
+.visit-form input,
+.visit-form select,
+.visit-form textarea {
+  padding: 10px;
+  background: var(--color-white);
+  color: var(--color-dark);
+  border: 2px solid var(--color-info-dark);
+  border-radius: var(--border-radius-1);
+  width: 100%;
+  position: relative;
+}
+
+.visit-form input:focus,
+.visit-form select:focus,
+.visit-form textarea:focus {
+  border-color: var(--color-dark);
+}
+
+.visit-form .w-45 {
+  width: 48%;
+  margin: 5px 0;
+}
+
+.visit-form .w-100 {
+  width: 100%;
+}
+
+.visit-form textarea {
+  height: 85px;
+  resize: none;
+}
+
+.visit-form .drop-down {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4%;
+  margin: 15px 0;
+}
+
+.visit-form .controls {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px 0 0 0;
+  gap: 10px;
+}
+
+.visit-form button {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--border-radius-1);
+  cursor: pointer;
+}
+
+.visit-form .flex {
+  display: flex;
+  align-items: center;
+  gap: 4%;
+}
+
+.visit-form .date-time {
+  margin-bottom: 15px;
+}
+
+
+.errMessage{
+  padding: 5px 0;
+  font-weight: 500;
+  font-size: 1rem;
+  color: red;
+}

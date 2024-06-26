@@ -1,0 +1,190 @@
+.details-container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 55% 43%;
+  grid-template-areas: "client-form" "visit-table";
+  gap: 15px;
+
+  .client-form {
+    grid-area: client-form;
+  }
+
+  .visit-table {
+    grid-area: visit-table;
+  }
+}
+
+.details-form {
+  width: 100%;
+  max-height: 100%;
+  overflow: scroll;
+  margin: 0px auto;
+  padding: 30px 10px 10px 10px;
+  background: var(--color-white);
+  box-shadow: var(--box-shadow);
+  border-radius: var(--card-border-radius);
+
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  gap: 20px;
+  flex-wrap: wrap;
+
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+  }
+
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  span.error {
+    margin: 5px 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  
+
+  input,
+  select,
+  textarea {
+    padding: 10px;
+    background: var(--color-white);
+    color: var(--color-dark);
+    border: 2px solid var(--color-info-dark);
+    border-radius: var(--border-radius-1);
+    width: 100%;
+    position: relative;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--color-dark);
+  }
+
+  textarea {
+    height: 85px;
+    resize: none;
+  }
+
+  .w-35 {
+    width: 35%;
+    margin: 5px 0;
+  }
+
+  .w-45 {
+    width: 45%;
+  }
+
+  .w-100 {
+    width: 100%;
+  }
+
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+  }
+
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .personal-info,
+  .contact,
+  .interests {
+    min-width: 300px;
+    max-width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 20px;
+  }
+
+  #clientId {
+    width: 135px;
+  }
+
+  .full-flex {
+    width: calc(90% + 10px);
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-weight: 600;
+    border: none;
+    border-radius: var(--border-radius-1);
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: var(--color-primary-dark);
+  }
+}
+
+.visit-table {
+  width: 100%;
+  max-height: 100%;
+  overflow: scroll;
+  margin: 0px auto;
+  padding: 0 15px 10px;
+  background: var(--color-white);
+  box-shadow: var(--box-shadow);
+  border-radius: var(--card-border-radius);
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  table thead {
+    position: sticky;
+    top: 0;
+    background: var(--color-white);
+  }
+
+  th,
+  td {
+    padding: 12px;
+    text-align: center;
+    font-size: 1rem;
+    font-family: Poppins, sans-serif;
+  }
+
+  th {
+    font-size: 1.1rem;
+  }
+
+  .action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .action button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3;
+    border-radius: 5px;
+  }
+}

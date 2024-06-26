@@ -1,0 +1,164 @@
+.reg-form {
+  width: 70%;
+  overflow-x: auto;
+  margin: 0px auto; 
+  padding: 25px 10px;
+  background: var(--color-white);
+  box-shadow: var(--box-shadow);
+  border-radius: var(--card-border-radius);
+
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  gap: 20px;
+  flex-wrap: wrap;
+
+  h1 {
+    /* width: 100%; */
+    padding: 15px 25px;
+    text-decoration-line: underline;
+    text-decoration-thickness: 3px;
+  }
+
+  form {
+    width: 100%;
+    padding: 0 25px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    gap: 4%;
+    flex-wrap: wrap;
+  }
+
+  form {
+    .personal-info,
+    .security {
+      width: max(30%, 350px);
+    }
+
+    .input-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+    }
+
+    label {
+      font-weight: bold;
+      margin: 5px 0;
+    }
+
+    input:not([type="checkbox"]),
+    select,
+    textarea {
+      padding: 10px;
+      background: var(--color-white);
+      color: var(--color-dark);
+      border: 2px solid var(--color-info-dark);
+      border-radius: var(--border-radius-1);
+      width: 100%;
+      position: relative;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--color-dark);
+    }
+
+    textarea {
+      height: 85px;
+      resize: none;
+    }
+
+    .w-32 {
+      width: 32% !important;
+    }
+
+    .w-48 {
+      width: 48% !important;
+    }
+
+    .w-100 {
+      width: 100% !important;
+    }
+
+    .flex {
+      display: flex;
+      align-items: center;
+      justify-content: start;
+      flex-wrap: wrap;
+    }
+
+    .justify-around{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 10px 5px;
+    }
+    
+    .gap-4 {
+      gap: 4%;
+    }
+    
+    .gap-2 {
+      gap: 2%;
+    }
+
+    input[type="checkbox"] {
+      margin: 25px 10px;
+    }
+
+    button {
+      background-color: var(--color-primary);
+      color: var(--color-white);
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--border-radius-1);
+      cursor: pointer;
+    }
+  
+    button:hover {
+      background-color: var(--color-primary-dark);
+    }
+
+    span{
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .user-container{
+      position: relative;
+    }
+
+    .user-container span{
+      position: absolute;
+      top: 50%;
+      right: 4%;
+      transform: translateY(-50%);
+      color: var(--color-dark);
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+  }
+
+  @media (width < 950px) {
+    .personal-info,
+    .security {
+      width: max(100%, 350px) !important;
+    }
+  }
+}
+
+@media (width < 1400px) {
+  .reg-form {
+    width: 80%;
+  }
+}
+
+@media (width < 1250px) {
+  .reg-form {
+    width: 90%;
+  }
+}

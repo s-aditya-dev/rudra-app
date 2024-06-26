@@ -1,0 +1,235 @@
+.form-container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-areas: "client-form" "visit-table";
+  gap: 15px;
+
+  .client-form {
+    grid-area: client-form;
+  }
+
+  .visit-table {
+    grid-area: visit-table;
+  }
+}
+
+.client-form {
+  width: 100%;
+  overflow-x: auto;
+  margin: 0px auto;
+  padding:25px 10px;
+  background: var(--color-white);
+  box-shadow: var(--box-shadow);
+  border-radius: var(--card-border-radius);
+
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  gap: 20px;
+  flex-wrap: wrap;
+
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+  }
+
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  span {
+    margin: 5px 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 10px;
+    background: var(--color-white);
+    color: var(--color-dark);
+    border: 2px solid var(--color-info-dark);
+    border-radius: var(--border-radius-1);
+    width: 100%;
+    position: relative;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--color-dark);
+  }
+
+  textarea {
+    height: 85px;
+    resize: none;
+  }
+
+  .w-35 {
+    width: 35%;
+    margin: 5px 0;
+  }
+
+  .w-45 {
+    width: 45%;
+  }
+
+  .w-100 {
+    width: 100%;
+  }
+
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .personal-info,
+  .contact,
+  .interests {
+    min-width: 300px;
+    max-width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 20px;
+  }
+
+  #clientId {
+    width: 135px;
+  }
+
+  .full-flex {
+    width: calc(90% + 10px);
+  }
+
+  button {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius-1);
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: var(--color-primary-dark);
+  }
+}
+
+.AddVisit {
+  width: 100%;
+  max-height: 100%;
+  overflow: auto;
+  margin: 0px auto;
+  padding: 10px 15px 10px;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+
+  input,
+  select,
+  textarea {
+    padding: 10px;
+    background: var(--color-white);
+    color: var(--color-dark);
+    border: 2px solid var(--color-info-dark);
+    border-radius: var(--border-radius-1);
+    position: relative;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--color-dark);
+  }
+
+  textarea {
+    min-width: 250px;
+    max-width: 43%;
+    resize: none;
+  }
+
+  .w-45 {
+    width: calc(50% - 5px);
+  }
+
+  .w-100 {
+    width: 100%;
+  }
+
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+  }
+
+  .flex {
+    display: flex;
+    align-items: baseline;
+    justify-content: start;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .source-container,
+  .relation-container,
+  .closing-container,
+  .status-container {
+    width: calc(25% - 8px);
+    min-width: 150px;
+  }
+}
+
+@media (width < 800px) {
+  .client-form{
+    padding: 45px 10px;
+  }
+
+  .form-container {
+    height: fit-content;
+  }
+}
+
+@media (width < 650px) {
+  .client-form {
+    .w-45 {
+      width: 48%;
+    }
+
+    .flex {
+      gap: 4%;
+    }
+
+    .full-flex {
+      width: 100%;
+    }
+  }
+
+  .sp-w-100 {
+    width: 100% !important;
+  }
+
+  .AddVisit {
+
+    .sp-w-100 {
+      width: 100%;
+    }
+
+    textarea {
+      min-width: 100%;
+    }
+  }
+}

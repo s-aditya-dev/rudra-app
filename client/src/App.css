@@ -1,0 +1,119 @@
+
+:root{
+    --color-primary: #6C9BCF;
+    --color-danger: #FF0060;
+    --color-dark-danger: #d30152;
+    --color-success: #177e6b;
+    --color-dark-success: #1B9C85;
+    --color-warning: #F7D060;
+    --color-dark-warning: #e9c457;
+    --color-hold: #007BFF;
+    --color-dark-hold: #0061c9;
+    --color-white: #fff;
+    --color-info-dark: #7d8da1;
+    --color-dark: #363949;
+    --color-light-dark: #8d8d94;
+    --color-light: rgba(132, 139, 200, 0.4);
+    --color-dark-variant: #677483;
+    --color-background: #f6f6f9;
+
+    --card-border-radius: 2rem;
+    --border-radius-1: 0.4rem;
+    --border-radius-2: 1.2rem;
+
+    --card-padding: 1.8rem;
+    --padding-1: 1.2rem;
+
+    --box-shadow: 0 2rem 3rem var(--color-light) !important;
+}
+
+.dark-mode-variables{
+    --color-background: #181a1e;
+    --color-white: #202528;
+    --color-dark: #edeffd;
+    --color-light-dark: #c7c7ce;
+    --color-dark-variant: #a3bdcc;
+    --color-light: rgba(0, 0, 0, 0.4);
+    --box-shadow: 0 2rem 3rem var(--color-light);
+}
+
+/* Resetting default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: grid;
+    align-items: start !important;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+}
+
+.center-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100svh;
+}
+
+label span{
+    color: red;
+}
+/* Global styles */
+.status-lost{
+    color: var(--color-danger);
+}
+
+.status-cold{
+    color: var(--color-hold);
+}
+
+.status-warm{
+    color: var(--color-warning);
+}
+
+.status-booked{
+    color: var(--color-success);
+}
+
+
+.red-btn{    
+    background: var(--color-danger) !important;
+}
+
+.red-btn:hover{    
+    background: var(--color-dark-danger) !important;
+}
+
+.green-btn{    
+    background: var(--color-success) !important;
+}
+
+.green-btn:hover{    
+    background: var(--color-dark-success) !important;
+}
+
+.yellow-btn{    
+    background: var(--color-warning) !important;
+}
+
+.yellow-btn:hover{    
+    background: var(--color-dark-warning) !important;
+}
+
+.blue-btn{    
+    background: var(--color-hold) !important;
+}
+
+.blue-btn:hover{    
+    background: var(--color-dark-hold) !important;
+}
+
+/* Responsive design */
+@media (width > 768px) {
+    body{
+        justify-content: center;
+    }
+}

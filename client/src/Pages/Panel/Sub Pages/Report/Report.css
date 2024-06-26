@@ -1,0 +1,135 @@
+.report-container {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 20px;
+
+  h2 {
+    font-size: 24px;
+    width: 100%;
+    text-align: center;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .client-report {
+    /* background: red; */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 30%;
+    padding: 20px;
+  }
+
+  .client-report .bg {
+    width: 100%;
+    height: 200px;
+    background-color: var(--color-white);
+    box-shadow: var(--box-shadow);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .loading,
+  .error {
+    font-size: 18px;
+    color: #ff0000;
+  }
+
+  label {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .w-35 {
+    width: 35%;
+    margin: 5px 0;
+  }
+
+  .w-45 {
+    width: 45%;
+  }
+
+  .w-100 {
+    width: 100%;
+  }
+
+  .input-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .input-down {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+  }
+
+  .input-down label {
+    margin-bottom: 10px;
+  }
+
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+  }
+
+  select {
+    padding: 10px;
+    background: var(--color-white);
+    color: var(--color-dark);
+    border: 2px solid var(--color-info-dark);
+    border-radius: var(--border-radius-1);
+    width: 100%;
+    position: relative;
+  }
+
+  select:focus {
+    border-color: var(--color-dark);
+  }
+
+  .drop-down {
+    display: none;
+  }
+
+  .drop-down.active {
+    display: flex !important;
+  }
+}

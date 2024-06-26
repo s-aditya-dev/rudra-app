@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    appearance: 0;
+    border: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 14px;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.88rem;
+    user-select: none;
+    overflow-x: hidden;
+    color: var(--color-dark);
+    background-color: var(--color-background);
+}
+
+a{
+    color: var(--color-dark);
+}
+
+img{
+    display: block;
+    width: 100%;
+    object-fit: cover;
+}
+
+h1{
+    font-weight: 800;
+    font-size: 1.8rem;
+}
+
+h2{
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+h3{
+    font-weight: 500;
+    font-size: 0.87rem;
+}
+
+small{
+    font-size: 0.76rem;
+}
+
+p{
+    color: var(--color-dark-variant);
+}
+
+b{
+    color: var(--color-dark);
+}
+
+.text-muted{
+    color: var(--color-info-dark);
+}
+
+.primary{
+    color: var(--color-primary);
+}
+
+.danger{
+    color: var(--color-danger);
+}
+
+.success{
+    color: var(--color-success);
+}
+
+.warning{
+    color: var(--color-warning);
+}
+
+.container{
+    width: 96svw;
+    height: 100svh;
+    display: grid;
+    grid-template-columns: 12rem auto;
+    grid-template-rows: 4rem auto;
+    grid-template-areas: 'sidebar nav' 'sidebar main-content';
+    margin: 0 auto;
+    gap: 1.8rem;
+
+
+    aside{
+        grid-area: sidebar;
+    }
+    
+    nav{
+        grid-area: nav;
+    }
+    
+    .main-content{
+        grid-area: main-content;
+        position: relative;
+        height: 86vh;
+    };
+}
+
+@media screen and (max-width: 1200px) {
+    .container{
+        grid-template-columns: 6rem auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .container{
+        width: 96vw;
+        height: auto;
+        grid-template-columns: 96vw;
+        grid-template-rows: 4.6rem auto;
+        grid-template-areas: 'nav' 'main-content';
+        padding: 0 var(--padding-1);
+    }
+
+}
+
+
+
+
+
+

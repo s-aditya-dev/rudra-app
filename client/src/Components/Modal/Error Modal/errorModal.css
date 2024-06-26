@@ -1,0 +1,31 @@
+/* ErrorNotification.css */
+.error-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #f44336;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .error-notification p {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .error-notification button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: white;
+    color: #f44336;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .error-notification button:hover {
+    background-color: #e0e0e0;
+  }
+  
