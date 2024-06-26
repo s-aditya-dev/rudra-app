@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   server:{
     proxy:{
-      "/user":"https://rudra-backend.vercel.app/api"
+      "/user":"https://rudra-app-backend.vercel.app/api"
     }
   },
   plugins: [react()],
