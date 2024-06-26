@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const newRequest = axios.create({
-  baseURL: "https://rudra-backend.vercel.app/api/",
+  baseURL: "https://rudra-app-backend.vercel.app/api/",
   withCredentials: true,
 });
 
