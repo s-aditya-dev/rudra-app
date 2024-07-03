@@ -79,11 +79,11 @@ function Report() {
   };
 
   if (isLoading || isLoadingClients) {
-    return <div className="loading">Loading...</div>;
+    return <Loader />;
   }
-
+  
   if (error || errorClients) {
-    return <div className="error">Error: {error?.message || errorClients?.message}</div>;
+    return <Loader message={`Something went wrong: ${error?.message || errorClients?.message}`} />;
   }
 
   return (

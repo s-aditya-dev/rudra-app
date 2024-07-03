@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 import Loader from "../../../../Components/Loader/Loader.jsx";
 
 function ClientList() {
-
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const { isLoading, error, data } = useQuery({
@@ -21,6 +20,7 @@ function ClientList() {
 
   const [clients, setClients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortNewestFirst, setSortNewestFirst] = useState(true);
 
   useEffect(() => {
     if (data) {
@@ -43,7 +43,6 @@ function ClientList() {
 
     return (
       fullName.includes(termLower) ||
-      // (client.clientId && client.clientId.toLowerCase().includes(termLower)) ||
       (client.contact &&
         client.contact.toString().toLowerCase().includes(termLower)) ||
       (client.requirement &&
@@ -68,6 +67,15 @@ function ClientList() {
     searchFields(client, searchTerm)
   );
 
+  const sortedClients = filteredClients.sort((a, b) => {
+    const dateA = new Date(a.createdAt);
+    const dateB = new Date(b.createdAt);
+    return sortNewestFirst ? dateB - dateA : dateA - dateB;
+  });
+
+  const toggleSortOrder = () => {
+    setSortNewestFirst(!sortNewestFirst);
+  };
 
   const getStatusClass = (status) => {
     switch (status) {
@@ -94,9 +102,6 @@ function ClientList() {
     }
   };
 
-  let count = 0;
-  
-
   return (
     <div className="client-table">
       <div className="client-table-header">
@@ -113,16 +118,23 @@ function ClientList() {
             placeholder="Search..."
           />
         </div>
-        <Link to="/panel/form">
-          <button>Add Client</button>
-        </Link>
+        <th>{`Record Count: ${sortedClients.length}`}</th>
+        <div className="controls">
+          <button className="order-sort" onClick={toggleSortOrder}>
+            <span className="material-symbols-rounded">
+              swap_vert
+            </span>
+          </button>
+          <Link to="/panel/form">
+            <button>Add Client</button>
+          </Link>
+        </div>
       </div>
       <table>
         <thead>
           <tr>
             <th>#</th>
             <th>Name</th>
-            {/* <th>Contact</th> */}
             <th>Requirement</th>
             <th>Budget</th>
             <th>Reference</th>
@@ -134,7 +146,7 @@ function ClientList() {
           </tr>
         </thead>
         <tbody>
-          {filteredClients.map((client) => {
+          {sortedClients.map((client) => {
             const lastVisit =
               client.clientVisits[client.clientVisits.length - 1];
 
@@ -152,9 +164,8 @@ function ClientList() {
 
             return (
               <tr key={client._id}>
-                <td>{(count += 1)}</td>
+                <td>{client.clientId}</td>
                 <td>{client.firstName + " " + client.lastName}</td>
-                {/* <td>{client.contact}</td> */}
                 <td>{client.requirement}</td>
                 <td>{formatBudget(client.budget)}</td>
                 {lastVisit && (

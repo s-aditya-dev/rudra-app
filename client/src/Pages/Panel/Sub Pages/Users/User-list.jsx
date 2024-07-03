@@ -52,11 +52,11 @@ const UserList = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <Loader message={`Something went wrong: ${error.message}`} />;
   }
 
   return (
