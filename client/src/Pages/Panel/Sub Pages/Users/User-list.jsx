@@ -4,6 +4,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import newRequest from "../../../../utils/newRequest.js";
 import { Link } from "react-router-dom";
 
+import Loader from "../../../../Components/Loader/Loader.jsx";
+
 const UserList = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["users"],

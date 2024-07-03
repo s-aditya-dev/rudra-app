@@ -4,6 +4,7 @@ import newRequest from "../../../../utils/newRequest.js";
 import * as XLSX from 'xlsx';
 import './Report.css';
 import ExcelIcon from './Excel.jsx'
+import Loader from "../../../../Components/Loader/Loader.jsx";
 
 function Report() {
   const { isLoading, error, data } = useQuery({
