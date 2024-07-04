@@ -111,6 +111,10 @@ label span{
     background: var(--color-dark-hold) !important;
 }
 
+
+.error{
+    color: red !important;
+}
 /* Responsive design */
 @media (width > 768px) {
     body{

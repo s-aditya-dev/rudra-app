@@ -43,8 +43,8 @@ function ClientList() {
 
     return (
       fullName.includes(termLower) ||
-      (client.contact &&
-        client.contact.toString().toLowerCase().includes(termLower)) ||
+      (client.clientId &&
+        client.clientId.toString().toLowerCase().includes(termLower)) ||
       (client.requirement &&
         client.requirement.toLowerCase().includes(termLower)) ||
       (client.budget &&
