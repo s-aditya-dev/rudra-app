@@ -26,7 +26,7 @@ const connect = async () => {
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://rudra-app-frontend.onrender.com",
     credentials: true,
   })
 );
