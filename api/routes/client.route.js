@@ -1,5 +1,5 @@
 import express from "express";
-import { verifyToken } from "../middleware/jwt.js";
+//import { verifyToken } from "../middleware/jwt.js";
 import {
   createClient,
   getClient,
@@ -10,10 +10,10 @@ import {
 
 const router = express.Router();
 
-router.post("/", verifyToken, createClient);
-router.get("/:id", verifyToken, getClient);
-router.get("/", verifyToken, getClients);
-router.put("/:id", verifyToken, updateClient);
-router.delete("/:id", verifyToken, deleteClientAndVisits);
+router.post("/", createClient);
+router.get("/:id", getClient);
+router.get("/", getClients);
+router.put("/:id", updateClient);
+router.delete("/:id", deleteClientAndVisits);
 
 export default router;
