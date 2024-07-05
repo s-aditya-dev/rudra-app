@@ -50,6 +50,53 @@ export const getClient = async (req, res, next) => {
   }
 };
 
+
+export const getUserClients = async (req, res, next) => {
+  const { managerType, firstName } = req.query;
+
+  const validManagerTypes = ['source', 'relation', 'closing'];
+
+  if (!validManagerTypes.includes(managerType)) {
+    return next(createError(400, 'Invalid manager type'));
+  }
+
+  try {
+
+    const clients = await Client.find({})
+      .populate({
+        path: 'clientVisits',
+        model: 'ClientVisit',
+        options: { sort: { createdAt: -1 }, limit: 1 },
+      })
+      .exec();
+
+    const filteredClients = clients.filter(client => {
+      const latestVisit = client.clientVisits[0];
+      if (!latestVisit) return false;
+
+      switch (managerType) {
+        case 'source':
+          return latestVisit.sourcingManager === firstName;
+        case 'relation':
+          return latestVisit.relationshipManager === firstName;
+        case 'closing':
+          return latestVisit.closingManager === firstName;
+        default:
+          return false;
+      }
+    });
+
+    if (!filteredClients.length) {
+      return next(createError(404, 'No clients found for the given criteria'));
+    }
+
+
+    res.status(200).json(filteredClients);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const getAllVisits = async (req, res, next) => {
   try {
     const visits = await ClientVisit.find({});

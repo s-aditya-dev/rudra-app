@@ -6,6 +6,7 @@ import cors from "cors";
 import authRoute from "./routes/auth.route.js";
 import userRoute from "./routes/user.route.js";
 import clientRoute from "./routes/client.route.js";
+import userClientRoute from "./routes/userClient.route.js";
 import clientVisitRoute from "./routes/clientVisit.route.js";
 import visitsRoute from "./routes/visits.route.js";
 
@@ -37,6 +38,8 @@ app.use(cookieParser());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/clients", clientRoute);
+app.use("/api/user-clients", userClientRoute);
+
 app.use(
   "/api/clients/:id/clientVisits",
   (req, res, next) => {

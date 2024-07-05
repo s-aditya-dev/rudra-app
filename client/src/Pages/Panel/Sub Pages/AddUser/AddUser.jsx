@@ -151,8 +151,7 @@ const AddUser = () => {
 
     try {
       await newRequest.post("/auth/userRegister", userData);
-      if (user.admin) navigate("/Panel/users");
-      else navigate('/login');
+      navigate("/Panel/users");
     } catch (err) {
       console.log(err);
     }

@@ -10,12 +10,23 @@ import Loader from "../../../../Components/Loader/Loader.jsx";
 function ClientList() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
+  let queryKey = [];
+  let queryFn = () => { };
+
+  if (currentUser.admin) {
+    queryKey = ["clients"];
+    queryFn = () => newRequest.get("/clients").then((res) => res.data);
+  } else {
+    queryKey = ["userClients", currentUser.manager, currentUser.firstName];
+    queryFn = () =>
+      newRequest
+        .get(`/user-clients?managerType=${currentUser.manager}&firstName=${currentUser.firstName}`)
+        .then((res) => res.data);
+  }
+
   const { isLoading, error, data } = useQuery({
-    queryKey: ["clients"],
-    queryFn: () =>
-      newRequest.get("/clients").then((res) => {
-        return res.data;
-      }),
+    queryKey,
+    queryFn,
   });
 
   const [clients, setClients] = useState([]);
@@ -68,9 +79,9 @@ function ClientList() {
   );
 
   const sortedClients = filteredClients.sort((a, b) => {
-    const dateA = new Date(a.createdAt);
-    const dateB = new Date(b.createdAt);
-    return sortNewestFirst ? dateB - dateA : dateA - dateB;
+    return sortNewestFirst
+      ? b.clientId - a.clientId
+      : a.clientId - b.clientId;
   });
 
   const toggleSortOrder = () => {
@@ -79,16 +90,16 @@ function ClientList() {
 
   const getStatusClass = (status) => {
     switch (status) {
-      case 'warm':
-        return 'status-warm';
-      case 'cold':
-        return 'status-cold';
-      case 'lost':
-        return 'status-lost';
-      case 'booked':
-        return 'status-booked';
+      case "warm":
+        return "status-warm";
+      case "cold":
+        return "status-cold";
+      case "lost":
+        return "status-lost";
+      case "booked":
+        return "status-booked";
       default:
-        return '';
+        return "";
     }
   };
 
@@ -118,12 +129,10 @@ function ClientList() {
             placeholder="Search..."
           />
         </div>
-        <th>{`Record Count: ${sortedClients.length}`}</th>
+        <th>{`Record Count: ${clients.length}`}</th>
         <div className="controls">
           <button className="order-sort" onClick={toggleSortOrder}>
-            <span className="material-symbols-rounded">
-              swap_vert
-            </span>
+            <span className="material-symbols-rounded">swap_vert</span>
           </button>
           <Link to="/panel/form">
             <button>Add Client</button>
@@ -147,20 +156,7 @@ function ClientList() {
         </thead>
         <tbody>
           {sortedClients.map((client) => {
-            const lastVisit =
-              client.clientVisits[client.clientVisits.length - 1];
-
-            if (!currentUser.admin) {
-              const isCurrentUserManager =
-                lastVisit &&
-                (lastVisit.sourcingManager === currentUser.firstName ||
-                  lastVisit.relationshipManager === currentUser.firstName ||
-                  lastVisit.closingManager === currentUser.firstName);
-
-              if (!isCurrentUserManager) {
-                return null;
-              }
-            }
+            const lastVisit = client.clientVisits[client.clientVisits.length - 1];
 
             return (
               <tr key={client._id}>
@@ -181,9 +177,7 @@ function ClientList() {
                   <div className="controls">
                     <Link to={`/panel/client-details/${client._id}`}>
                       <button>
-                        <span className="material-symbols-rounded">
-                          chevron_right
-                        </span>
+                        <span className="material-symbols-rounded">chevron_right</span>
                       </button>
                     </Link>
                   </div>
