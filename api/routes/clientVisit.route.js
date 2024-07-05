@@ -1,5 +1,4 @@
 import express from "express";
-import { verifyToken } from "../middleware/jwt.js";
 import {
   createClientVisit,
   getClientVisits,
@@ -7,7 +6,7 @@ import {
 
 const router = express.Router();
 
-router.post("/", verifyToken, createClientVisit);
-router.get("/", verifyToken, getClientVisits);
+router.post("/", createClientVisit);
+router.get("/", getClientVisits);
 
 export default router;

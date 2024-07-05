@@ -1,5 +1,4 @@
 import express from "express";
-import { verifyToken } from "../middleware/jwt.js";
 import { getAllVisits } from "../controllers/client.controller.js";
 import {
   getClientVisitDetails,
@@ -10,10 +9,10 @@ import {
 
 const router = express.Router();
 
-router.get("/", verifyToken, getAllVisits);
-router.get("/managers", verifyToken, getClientVisitDetails);
-router.get("/:id", verifyToken, getClientVisit);
-router.put("/:id", verifyToken, updateClientVisit);
-router.delete("/:id", verifyToken, deleteClientVisit);
+router.get("/", getAllVisits);
+router.get("/managers", getClientVisitDetails);
+router.get("/:id", getClientVisit);
+router.put("/:id", updateClientVisit);
+router.delete("/:id", deleteClientVisit);
 
 export default router;
