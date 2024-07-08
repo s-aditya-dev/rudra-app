@@ -109,27 +109,21 @@ b{
     };
 }
 
-@media screen and (max-width: 1200px) {
+/* @media screen and (max-width: 1200px) {
     .container{
         grid-template-columns: 6rem auto;
     }
-}
+} */
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
 
     .container{
         width: 96vw;
         height: auto;
-        grid-template-columns: 96vw;
+        grid-template-columns: 1fr;
         grid-template-rows: 4.6rem auto;
         grid-template-areas: 'nav' 'main-content';
         padding: 0 var(--padding-1);
     }
 
 }
-
-
-
-
-
-

@@ -101,7 +101,7 @@ nav .user-profile h2{
     margin-bottom: 0.2rem;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
 
     nav{
         width: 94%;

@@ -11,7 +11,7 @@ function ClientList() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   let queryKey = [];
-  let queryFn = () => { };
+  let queryFn = () => {};
 
   if (currentUser.admin) {
     queryKey = ["clients"];
@@ -32,6 +32,12 @@ function ClientList() {
   const [clients, setClients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortNewestFirst, setSortNewestFirst] = useState(true);
+  const [activeClientId, setActiveClientId] = useState(null);
+
+  const handleRowClick = (clientId) => {
+    // setActiveClientId(clientId);
+    setActiveClientId(prevClientId => prevClientId === clientId ? null : clientId);
+  };
 
   useEffect(() => {
     if (data) {
@@ -159,28 +165,30 @@ function ClientList() {
             const lastVisit = client.clientVisits[client.clientVisits.length - 1];
 
             return (
-              <tr key={client._id}>
-                <td>{client.clientId}</td>
-                <td>{client.firstName + " " + client.lastName}</td>
-                <td>{client.requirement}</td>
-                <td>{formatBudget(client.budget)}</td>
+              <tr 
+              key={client._id}
+              className={activeClientId === client._id ? 'active' : ''}
+              
+              >
+                <td data-cell= 'Client ID' onClick={() => handleRowClick(client._id)}>{client.clientId}</td>
+                <td data-cell = 'Name' onClick={() => handleRowClick(client._id)}>{client.firstName + " " + client.lastName}</td>
+                <td data-cell = 'Requirement'>{client.requirement}</td>
+                <td data-cell = 'Budget'>{formatBudget(client.budget)}</td>
                 {lastVisit && (
                   <>
-                    <td>{lastVisit.referenceBy}</td>
-                    <td>{lastVisit.sourcingManager}</td>
-                    <td>{lastVisit.relationshipManager}</td>
-                    <td>{lastVisit.closingManager}</td>
-                    <td className={getStatusClass(lastVisit.status)}>{lastVisit.status}</td>
+                    <td data-cell = 'Reference'>{lastVisit.referenceBy}</td>
+                    <td data-cell = 'Source'>{lastVisit.sourcingManager}</td>
+                    <td data-cell = 'Relation'>{lastVisit.relationshipManager}</td>
+                    <td data-cell = 'Closing'>{lastVisit.closingManager}</td>
+                    <td data-cell = 'Status' className={getStatusClass(lastVisit.status)}>{lastVisit.status}</td>
                   </>
                 )}
                 <td>
-                  <div className="controls">
                     <Link to={`/panel/client-details/${client._id}`}>
                       <button>
                         <span className="material-symbols-rounded">chevron_right</span>
                       </button>
                     </Link>
-                  </div>
                 </td>
               </tr>
             );
