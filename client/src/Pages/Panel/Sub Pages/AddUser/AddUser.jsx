@@ -167,7 +167,7 @@ const AddUser = () => {
 
   return (
     <div className="reg-form">
-      <h1>Registration Form</h1>
+      <h3>Registration Form</h3>
       <form onSubmit={handleSubmit}>
         <div className="personal-info">
           <div className="name input-container">
@@ -207,7 +207,7 @@ const AddUser = () => {
             <label htmlFor="phone">Phone No.</label>
             <div className="flex gap-4">
               <input className="w-48" id="phone" name="phone" type="text" placeholder="Phone Number" onChange={handleChange} />
-              <input className="w-48" id="alt_phone" name="alt_phone" type="text" placeholder="Alt Phone Number" onChange={handleChange} />
+              <input className="w-48" id="alt_phone" name="alt_phone" type="text" placeholder="Alt Number" onChange={handleChange} />
             </div>
             {errors.phone && <span className="error">{errors.phone}</span>}
           </div>

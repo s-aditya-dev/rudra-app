@@ -73,11 +73,12 @@ const UserList = () => {
       <table>
         <thead>
           <tr>
-            <th>Sr No.</th>
+            <th>#</th>
             <th>Employee Name</th>
             <th>Username</th>
             <th>Password</th>
             <th>Role</th>
+            <th>Manager</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -91,21 +92,22 @@ const UserList = () => {
                 {user.showPassword ? user.password : "••••••••"}
               </td>
               {user.admin ? <td>Admin</td> : <td>User</td>}
+              <td>{user.manager}</td>
               <td className="action-buttons">
                 <button
-                  className="show-hide-button"
+                  className="show-hide-button green-btn"
                   onClick={() => togglePassword(index)}
                 >
                   <span className="material-symbols-rounded">
                     {user.showPassword ? "visibility" : "visibility_off"}
                   </span>
                 </button>
-                {/* <button>
+                <button className="blue-btn">
                   <span class="material-symbols-rounded">
                     edit
                   </span>
-                </button> */}
-                <button onClick={() => handleDelete(user._id)}><span className="material-symbols-rounded">
+                </button>
+                <button className="red-btn" onClick={() => handleDelete(user._id)}><span className="material-symbols-rounded">
                   delete_forever
                 </span></button>
               </td>
