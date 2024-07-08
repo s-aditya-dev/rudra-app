@@ -33,6 +33,7 @@ const UserList = () => {
   };
 
   const [users, setUsers] = useState([]);
+  const [activeUserId, setActiveUserId] = useState(null);
 
   useEffect(() => {
     if (data) {
@@ -61,6 +62,10 @@ const UserList = () => {
     return <Loader message={`Something went wrong: ${error.message}`} />;
   }
 
+  const handleRowClick = (UserId) => {
+    setActiveUserId(prevUserId => prevUserId === UserId ? null : UserId);
+  };
+
   return (
     <div className="users-table">
       <div className="users-table-header">
@@ -84,16 +89,16 @@ const UserList = () => {
         </thead>
         <tbody>
           {users.map((user, index) => (
-            <tr key={user._id}>
-              <td>{index + 1}</td>
-              <td>{user.firstName + ' ' + user.lastName}</td>
-              <td>{user.username}</td>
-              <td className="password-cell">
+            <tr key={user._id} className={activeUserId === user._id ? 'active' : ''}>
+              <td data-cell = 'Sr No' onClick={() => handleRowClick(user._id)}>{index + 1} </td>
+              <td data-cell = 'Employee Name' onClick={() => handleRowClick(user._id)}>{user.firstName + ' ' + user.lastName} </td>
+              <td data-cell = 'Username'>{user.username}</td>
+              <td data-cell = 'Password' className="password-cell">
                 {user.showPassword ? user.password : "••••••••"}
               </td>
-              {user.admin ? <td>Admin</td> : <td>User</td>}
-              <td>{user.manager}</td>
-              <td className="action-buttons">
+              {user.admin ? <td data-cell = 'Role'>Admin</td> : <td data-cell = 'Role'>User</td>}
+              <td data-cell = 'Manager'>{user.manager}</td>
+              <td data-cell = 'Action' className="action-buttons">
                 <button
                   className="show-hide-button green-btn"
                   onClick={() => togglePassword(index)}
@@ -102,11 +107,11 @@ const UserList = () => {
                     {user.showPassword ? "visibility" : "visibility_off"}
                   </span>
                 </button>
-                <button className="blue-btn">
+                {/* <button className="blue-btn">
                   <span class="material-symbols-rounded">
                     edit
                   </span>
-                </button>
+                </button> */}
                 <button className="red-btn" onClick={() => handleDelete(user._id)}><span className="material-symbols-rounded">
                   delete_forever
                 </span></button>

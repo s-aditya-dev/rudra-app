@@ -29,7 +29,7 @@
     --box-shadow: 0 2rem 3rem var(--color-light) !important;
 }
 
-.dark-mode-variables{
+.dark-mode{
     --color-background: #181a1e;
     --color-white: #202528;
     --color-dark: #edeffd;
