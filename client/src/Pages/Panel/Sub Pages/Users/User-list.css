@@ -98,7 +98,8 @@
   .users-table {
       width: 100%;
       --tr-padding: 50px;
-      margin: 0;
+      margin: 50px 0;
+      /* margin-bottom: 50px; */
       max-height: fit-content;
       height: auto;
 
