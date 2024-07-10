@@ -124,6 +124,10 @@ b{
         grid-template-rows: 4.6rem auto;
         grid-template-areas: 'nav' 'main-content';
         padding: var(--padding-1);
+
+        .main-content{
+            height: auto !important;
+        };
     }
 
 }

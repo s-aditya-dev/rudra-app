@@ -2,7 +2,6 @@
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-rows: 55% 43%;
   grid-template-rows: auto 1fr;
   grid-template-areas: "client-form" "visit-table";
   gap: 15px;
@@ -19,8 +18,8 @@
 .details-form {
   width: 100%;
   max-height: 100%;
-  overflow: scroll;
-  margin: 0px auto;
+  overflow: auto;
+  margin: 0 auto;
   padding: 30px 10px;
   background: var(--color-white);
   box-shadow: var(--box-shadow);
@@ -231,6 +230,10 @@
   body {
     height: fit-content;
     align-items: start;
+  }
+
+  .details-container{
+    margin: 50px 0;
   }
 
   .visit-table {
