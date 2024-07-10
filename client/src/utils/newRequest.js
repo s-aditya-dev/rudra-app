@@ -1,7 +1,8 @@
 import axios from "axios";
+import {backEndPort} from '../../../config.js'
 
 const newRequest = axios.create({
-  baseURL: "https://rudra-app-backend.onrender.com/api/",
+  baseURL: `${backEndPort}/api/`,
   withCredentials: true,
 });
 
