@@ -221,14 +221,15 @@ const ClientListForm = () => {
 
   return (
     <div className="form-container">
+      <h3>Client Form</h3>
       <form className="client-form" onSubmit={handleCombinedSubmit}>
-        <div className="personal-info">
-          <div className="name input-container">
+        <div className="col30">
+          <div className="flex-width-48 name input-container">
             <label htmlFor="firstName">Name:</label>
-            <div className="flex">
+            <div className="flex w-100">
               <input
                 type="text"
-                className="w-45"
+                className="w-48"
                 id="firstName"
                 placeholder="Enter First Name"
                 name="firstName"
@@ -236,7 +237,7 @@ const ClientListForm = () => {
               />
               <input
                 type="text"
-                className="w-45"
+                className="w-48"
                 id="lastName"
                 placeholder="Enter Last Name"
                 name="lastName"
@@ -246,26 +247,13 @@ const ClientListForm = () => {
             {errors.name && <span className="error">{errors.name}</span>}
           </div>
 
-          <div className="occupation input-container full-flex">
-            <label htmlFor="occupation">Occupation:</label>
-            <input
-              type="text"
-              id="occupation"
-              placeholder="Occupation"
-              name="occupation"
-              onChange={handleChange}
-            />
-            {errors.occupation && <span className="error">{errors.occupation}</span>}
-          </div>
-        </div>
 
-        <div className="contact">
-          <div className="phone input-container">
+          <div className="flex-width-48 phone input-container">
             <label htmlFor="phone">Phone:</label>
-            <div className="div flex">
+            <div className="w-100 flex">
               <input
                 type="text"
-                className="w-45"
+                className="w-48"
                 id="phone"
                 placeholder="Phone Number"
                 name="contact"
@@ -273,7 +261,7 @@ const ClientListForm = () => {
               />
               <input
                 type="text"
-                className="w-45"
+                className="w-48"
                 id="altPhone"
                 placeholder="Alt Number"
                 name="altContact"
@@ -282,7 +270,7 @@ const ClientListForm = () => {
             </div>
             {errors.contact && <span className="error">{errors.contact}</span>}
           </div>
-          <div className="email input-container full-flex">
+          <div className="email input-container flex-width-48">
             <label htmlFor="email">Email:</label>
             <input
               type="email"
@@ -294,7 +282,7 @@ const ClientListForm = () => {
             {errors.email && <span className="error">{errors.email}</span>}
           </div>
 
-          <div className="address input-container full-flex">
+          <div className="address input-container flex-width-48">
             <label htmlFor="address">Address:</label>
             <textarea
               id="address"
@@ -306,41 +294,56 @@ const ClientListForm = () => {
           </div>
         </div>
 
-        <div className="interests">
-          <div className="flex">
-            <div className="w-45 requirement input-container">
-              <label htmlFor="requirement">Requirement:</label>
-              <select
-                name="requirement"
+        <div className="col30">
+
+            <div className="occupation input-container flex-width-48">
+              <label htmlFor="occupation">Occupation:</label>
+              <input
+                type="text"
+                id="occupation"
+                placeholder="Occupation"
+                name="occupation"
                 onChange={handleChange}
                 className="w-100"
-                id="requirement"
-              >
-                <option value="" disabled selected>
-                  Select Requirement
-                </option>
-                <option value="1BHK">1BHK</option>
-                <option value="2BHK">2BHK</option>
-                <option value="2.5BHK">2.5BHK</option>
-                <option value="3.5BHK">3.5BHK</option>
-                <option value="4.5BHK">4.5BHK</option>
-                <option value="SHOP">SHOP</option>
-                <option value="OFFICE">OFFICE</option>
-              </select>
-              {errors.requirement && <span className="error">{errors.requirement}</span>}
+              />
+              {errors.occupation && <span className="error">{errors.occupation}</span>}
             </div>
-            <div className="w-45 budget input-container">
+
+            <div className="flex-width-48">
+              <div className="w-100 requirement input-container">
+                <label htmlFor="requirement">Requirement:</label>
+                <select
+                  name="requirement"
+                  onChange={handleChange}
+                  className="w-100"
+                  id="requirement"
+                >
+                  <option value="" disabled selected>
+                    Select Requirement
+                  </option>
+                  <option value="1BHK">1BHK</option>
+                  <option value="2BHK">2BHK</option>
+                  <option value="2.5BHK">2.5BHK</option>
+                  <option value="3.5BHK">3.5BHK</option>
+                  <option value="4.5BHK">4.5BHK</option>
+                  <option value="SHOP">SHOP</option>
+                  <option value="OFFICE">OFFICE</option>
+                </select>
+                {errors.requirement && <span className="error">{errors.requirement}</span>}
+              </div>
+            </div>
+            <div className="flex-width-48 w-100 budget input-container">
               <label htmlFor="budget">Budget:</label>
-              <div className="flex">
+              <div className="flex w-100">
                 <input
-                  className="w-45"
+                  className="w-48"
                   type="text"
                   name="budget"
                   onChange={handleChange}
                   id="budget"
                   placeholder="Budget"
                 />
-                <select className="w-45" id="budget-type" onChange={handleBudgetTypeChange}>
+                <select className="w-48" id="budget-type" onChange={handleBudgetTypeChange}>
                   <option value="" disabled selected>Type</option>
                   <option value="K">K</option>
                   <option value="Lac">Lac</option>
@@ -349,42 +352,44 @@ const ClientListForm = () => {
               </div>
               {errors.budget && <span className="error">{errors.budget}</span>}
             </div>
+            <div className="note input-container flex-width-48">
+              <label htmlFor="note">Note:</label>
+              <textarea
+                className="w-100"
+                id="note"
+                name="note"
+                onChange={handleChange}
+                placeholder="Note"
+              ></textarea>
+            </div>
           </div>
-          <div className="note input-container full-flex">
-            <label htmlFor="note">Note:</label>
-            <textarea
-              className="w-100"
-              id="note"
-              name="note"
-              onChange={handleChange}
-              placeholder="Note"
-            ></textarea>
-          </div>
-        </div>
 
-        <div className={`AddVisit`}>
-          <div className="date-time-container sp-w-100 input-container">
+
+        
+
+        <div className= 'AddVisit col30'>
+          <div className="date-time-container flex-width-48 input-container">
             <label htmlFor="visitDate">Date Time:</label>
-            <div className="flex date-time sp-w-100">
+            <div className="flex date-time w-100">
               <input
                 name="date"
                 onChange={handleVisitChange}
                 type="date"
                 id="visitDate"
-                className="w-45"
+                className="w-48"
               />
               <input
                 name="time"
                 onChange={handleVisitChange}
                 type="time"
                 id="visitTime"
-                className="w-45"
+                className="w-48"
               />
             </div>
             {errors.date && <span className="error">{errors.date}</span>}
           </div>
 
-          <div className="reference-container sp-w-100 input-container">
+          <div className="reference-container flex-width-48 input-container">
             <label htmlFor="reference">Reference by:</label>
             <input
               type="text"
@@ -396,8 +401,8 @@ const ClientListForm = () => {
             {errors.referenceBy && <span className="error">{errors.referenceBy}</span>}
           </div>
 
-          <div className="drop-down flex">
-            <div className="source-container sp-w-100 input-container">
+          <div className="drop-down flex-width-48 flex">
+            <div className="source-container sp-w-100 w-48 input-container">
               <label htmlFor="source">Source:</label>
               <select
                 id="source"
@@ -410,7 +415,7 @@ const ClientListForm = () => {
 
                 {managers.map(
                   (manager) =>
-                    manager.manager === "source" && (
+                    (manager.manager === "source" ||  manager.manager === "relation") && (
                       <option key={manager._id} value={manager.firstName}>
                         {manager.firstName} {manager.lastName}
                       </option>
@@ -420,7 +425,7 @@ const ClientListForm = () => {
               {errors.sourcingManager && <span className="error">{errors.sourcingManager}</span>}
             </div>
 
-            <div className="relation-container sp-w-100 input-container">
+            <div className="relation-container sp-w-100 w-48 input-container">
               <label htmlFor="relation">Relation:</label>
               <select
                 id="relation"
@@ -432,7 +437,7 @@ const ClientListForm = () => {
                 </option>
                 {managers.map(
                   (manager) =>
-                    manager.manager === "relation" && (
+                    (manager.manager === "source" ||  manager.manager === "relation") && (
                       <option key={manager._id} value={manager.firstName}>
                         {manager.firstName} {manager.lastName}
                       </option>
@@ -442,7 +447,7 @@ const ClientListForm = () => {
               {errors.relationshipManager && <span className="error">{errors.relationshipManager}</span>}
             </div>
 
-            <div className="closing-container sp-w-100 input-container">
+            <div className="closing-container sp-w-100 w-48 input-container">
               <label htmlFor="closing">Closing:</label>
               <select
                 id="closing"
@@ -464,7 +469,7 @@ const ClientListForm = () => {
               {errors.closingManager && <span className="error">{errors.closingManager}</span>}
             </div>
 
-            <div className="status-container sp-w-100 input-container">
+            <div className="status-container sp-w-100 w-48 input-container">
               <label htmlFor="status">Status:</label>
               <select
                 id="status"
@@ -483,7 +488,7 @@ const ClientListForm = () => {
             </div>
           </div>
 
-          <div className="remark input-container sp-w-100 w-100">
+          <div className="remark input-container sp-w-100 flex-width-48">
             <label htmlFor="remark">Remark:</label>
             <textarea
               onChange={handleVisitChange}

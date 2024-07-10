@@ -1,33 +1,35 @@
 .form-container {
-  height: 100%;
+  height:max(600px, 100%);
   width: 100%;
+  background: var(--color-white);
+  box-shadow: var(--box-shadow);
+  border-radius: var(--card-border-radius);
   display: grid;
-  grid-template-rows: 100%;
-  grid-template-areas: "client-form" "visit-table";
-  gap: 15px;
+  place-items: center;
+  gap: 1rem;
+  padding: 20px;
 
-  .client-form {
-    grid-area: client-form;
-  }
-
-  .visit-table {
-    grid-area: visit-table;
+  h3 {
+    /* width: 100%; */
+    font-weight: 800;
+    font-size: clamp(1.2rem, calc(2vw + 1rem), 1.8rem);
+    padding: 10px 25px;
+    text-decoration-line: underline;
+    text-decoration-thickness: 3px;
   }
 }
 
 .client-form {
   width: 100%;
+  height: max(560px, 100%);
   overflow-x: auto;
   margin: 0px auto;
-  padding:25px 10px;
-  background: var(--color-white);
-  box-shadow: var(--box-shadow);
-  border-radius: var(--card-border-radius);
+  padding: 25px 0;
 
   display: flex;
   justify-content: center;
   align-items: start;
-  gap: 20px;
+  gap: 3%;
   flex-wrap: wrap;
 
   .input-container {
@@ -71,13 +73,8 @@
     resize: none;
   }
 
-  .w-35 {
-    width: 35%;
-    margin: 5px 0;
-  }
-
-  .w-45 {
-    width: 45%;
+  .w-48 {
+    width: 48%;
   }
 
   .w-100 {
@@ -86,21 +83,19 @@
 
   .flex {
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: start;
-    gap: 10px;
     flex-wrap: wrap;
+    gap: 4%;
   }
 
-  .personal-info,
-  .contact,
-  .interests {
-    min-width: 300px;
-    max-width: 30%;
+  .col30 {
+    width: max(30%,280px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: start;
+    flex-wrap: wrap;
     gap: 20px;
   }
 
@@ -108,8 +103,12 @@
     width: 135px;
   }
 
-  .full-flex {
+  .flex-width-48 {
     width: calc(90% + 10px);
+  }
+
+  .drop-down > div:not(:last-child,:nth-last-child(2)){
+    margin-bottom: 10px;
   }
 
   button {
@@ -126,108 +125,48 @@
   }
 }
 
-.AddVisit {
-  width: 100%;
-  max-height: 100%;
-  overflow: auto;
-  margin: 0px auto;
-  padding: 10px 15px 10px;
-
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 10px;
-
-  input,
-  select,
-  textarea {
+@media (width < 1200px) {
+  .form-container {
+    height: fit-content;
+    margin: 50px 0;
     padding: 10px;
-    background: var(--color-white);
-    color: var(--color-dark);
-    border: 2px solid var(--color-info-dark);
-    border-radius: var(--border-radius-1);
-    position: relative;
   }
 
-  input:focus,
-  select:focus,
-  textarea:focus {
-    border-color: var(--color-dark);
-  }
-
-  textarea {
-    min-width: 250px;
-    max-width: 43%;
-    resize: none;
-  }
-
-  .w-45 {
-    width: calc(50% - 5px);
-  }
-
-  .w-100 {
-    width: 100%;
-  }
-
-  .input-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
-  }
-
-  .flex {
-    display: flex;
-    align-items: baseline;
-    justify-content: start;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .source-container,
-  .relation-container,
-  .closing-container,
-  .status-container {
-    width: calc(25% - 8px);
-    min-width: 150px;
+  .client-form {
+    height: auto;
+    gap: 1.5rem;
   }
 }
 
 @media (width < 800px) {
-  .client-form{
-    padding: 45px 10px;
+  .client-form {
+    flex-direction: column;
+    align-items: center;
   }
 
-  .form-container {
-    height: fit-content;
+  .col30 {
+    width: max(200px, 85%) !important;
   }
 }
 
 @media (width < 650px) {
   .client-form {
-    .w-45 {
-      width: 48%;
+    .sp-w-100 {
+      width: 100% !important;
     }
 
-    .flex {
-      gap: 4%;
-    }
+    
 
-    .full-flex {
+    .flex-width-48 {
       width: 100%;
     }
-  }
 
-  .sp-w-100 {
-    width: 100% !important;
+    .drop-down.flex{
+      gap: 10px;
+    }
   }
 
   .AddVisit {
-
-    .sp-w-100 {
-      width: 100%;
-    }
-
     textarea {
       min-width: 100%;
     }

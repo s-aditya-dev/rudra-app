@@ -5,10 +5,10 @@
     --color-primary-dark: #5a84af;
     --color-danger: #FF0060;
     --color-dark-danger: #d30152;
-    --color-success: #177e6b;
-    --color-dark-success: #1B9C85;
-    --color-warning: #F7D060;
-    --color-dark-warning: #e9c457;
+    --color-success: #20c4a6;
+    --color-dark-success: #177e6b;
+    --color-warning: #f5d882;
+    --color-dark-warning: #e4be4c;
     --color-hold: #007BFF;
     --color-dark-hold: #0061c9;
     --color-white: #fff;
@@ -65,19 +65,19 @@ label span{
 }
 /* Global styles */
 .status-lost{
-    color: var(--color-danger);
+    color: var(--color-danger) !important;
 }
 
 .status-cold{
-    color: var(--color-hold);
+    color: var(--color-hold) !important;
 }
 
 .status-warm{
-    color: var(--color-warning);
+    color: var(--color-warning) !important;
 }
 
 .status-booked{
-    color: var(--color-success);
+    color: var(--color-success) !important;
 }
 
 

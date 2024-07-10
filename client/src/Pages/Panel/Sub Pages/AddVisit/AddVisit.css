@@ -19,9 +19,9 @@
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
   transform-origin: center center;
-  max-width: 420px;
+  width: clamp(340px,35%,450px);
   min-height: 400px;
-  padding: 40px 35px 20px 35px;
+  padding: 40px clamp(20px,3%,35px) 20px;
   background: var(--color-white);
   box-shadow: var(--box-shadow);
   border: 2px solid var(--color-dark);

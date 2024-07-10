@@ -51,6 +51,8 @@ const ClientDetails = () => {
   });
 
   const [visits, setVisits] = useState([]);
+  const [activeVisitId, setActiveVisitId] = useState(null);
+
   const [isEditing, setIsEditing] = useState(false);
 
   // State for budget type and converted amount
@@ -239,6 +241,13 @@ const ClientDetails = () => {
     }
   };
 
+
+  const handleRowClick = (VisitId) => {
+    setActiveVisitId(prevVisitId => prevVisitId === VisitId ? null : VisitId);
+  };
+
+  let count = 0;
+
   return (
     <div className="details-container">
       <form className="details-form">
@@ -256,9 +265,9 @@ const ClientDetails = () => {
             />
           </div>
 
-          <div className="name input-container">
+          <div className="name w-100 input-container">
             <label htmlFor="firstName">Name:</label>
-            <div className="flex">
+            <div className="flex w-100">
               <input
                 type="text"
                 className="w-45"
@@ -299,9 +308,9 @@ const ClientDetails = () => {
         </div>
 
         <div className="contact">
-          <div className="phone input-container">
+          <div className="phone w-100 input-container">
             <label htmlFor="phone">Phone:</label>
-            <div className="flex">
+            <div className="flex w-100">
               <input
                 type="text"
                 className="w-45"
@@ -354,7 +363,7 @@ const ClientDetails = () => {
         </div>
 
         <div className="interests">
-          <div className="flex">
+          <div className="flex w-100">
             <div className="w-45 requirement input-container">
               <label htmlFor="requirement">Requirement:</label>
               <select
@@ -377,7 +386,7 @@ const ClientDetails = () => {
             </div>
             <div className="w-45 budget input-container">
               <label htmlFor="budget">Budget:</label>
-              <div className="flex">
+              <div className="flex w-100">
                 <input
                   className="w-100"
                   type="text"
@@ -450,6 +459,7 @@ const ClientDetails = () => {
         <table>
           <thead>
             <tr>
+              <th>#</th>
               <th>Date</th>
               <th>Time</th>
               <th>Reference</th>
@@ -457,22 +467,24 @@ const ClientDetails = () => {
               <th>Relation</th>
               <th>Closing</th>
               <th>Status</th>
-              <th>Remark</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {visits.map((visit, index) => (
-              <tr key={visit._id}>
-                <td>{visit.date}</td>
-                <td>{visit.time}</td>
-                <td>{visit.referenceBy}</td>
-                <td>{visit.sourcingManager}</td>
-                <td>{visit.relationshipManager}</td>
-                <td>{visit.closingManager}</td>
-                <td className={getStatusClass(visit.status)}>{visit.status}</td>
-                <td>{visit.visitRemark}</td>
-                <td className="action">
+              <tr 
+              key={visit._id}
+              className={activeVisitId === visit._id ? 'active' : ''}
+              >
+                <td data-cell = 'Sr No.' onClick={() => handleRowClick(visit._id)}>{++count}</td>
+                <td data-cell = 'Date'>{visit.date}</td>
+                <td data-cell = 'Time'>{visit.time}</td>
+                <td data-cell = 'Reference By'>{visit.referenceBy}</td>
+                <td data-cell = 'Source'>{visit.sourcingManager}</td>
+                <td data-cell = 'Relation'>{visit.relationshipManager}</td>
+                <td data-cell = 'Closing' onClick={() => handleRowClick(visit._id)}>{visit.closingManager}</td>
+                <td data-cell = 'Status' onClick={() => handleRowClick(visit._id)} className={getStatusClass(visit.status)}>{visit.status}</td>
+                <td data-cell = 'Action' className="action-buttons">
                   {currentUser.admin || index === visits.length - 1 ? (
                     <>
                       <button
@@ -503,7 +515,7 @@ const ClientDetails = () => {
                       />
                       {currentUser.admin ? (
                         <button
-                          style={{ cursor: "pointer" }}
+                          // style={{ cursor: "pointer" }}
                           className="delete red-btn"
                           onClick={() => handleDeleteVisit(visit._id)}
                         >
@@ -511,13 +523,23 @@ const ClientDetails = () => {
                             delete_forever
                           </span>
                         </button>
+
                       ) : null}
+
+                      <button
+                        onClick={() => handleOpenEditModal(visit._id)}
+                        className="edit blue-btn"
+                      >
+                        <span className="material-symbols-rounded">
+                          chevron_right
+                        </span>
+                      </button>
                     </>
                   ) : null}
                 </td>
               </tr>
             ))}
-          </tbody>
+          </tbody>  
         </table>
       </div>
     </div>

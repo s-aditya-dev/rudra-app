@@ -23,7 +23,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 30%;
+    width: clamp(300px,30%,350px);
+    min-width: 290px;
     padding: 20px;
   }
 
