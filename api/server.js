@@ -9,6 +9,7 @@ import clientRoute from "./routes/client.route.js";
 import userClientRoute from "./routes/userClient.route.js";
 import clientVisitRoute from "./routes/clientVisit.route.js";
 import visitsRoute from "./routes/visits.route.js";
+import visitRemarkRoute from "./routes/visitRemark.route.js";
 
 const port = 8000;
 
@@ -50,6 +51,7 @@ app.use(
   clientVisitRoute
 );
 app.use("/api/clientVisits", visitsRoute);
+app.use("/api/visitRemark", visitRemarkRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;

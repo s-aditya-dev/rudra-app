@@ -1,5 +1,6 @@
 import ClientVisit from "../models/clientVisit.model.js";
 import Client from "../models/client.model.js";
+import VisitRemark from "../models/visitRemark.model.js";
 import createError from "../utils/createError.js";
 import User from "../models/user.model.js";
 
@@ -10,17 +11,30 @@ export const createClientVisit = async (req, res, next) => {
     if (!client) {
       return res.status(404).send("Client not found");
     }
-    const newClientVisit = await ClientVisit({
+
+    const { visitRemark, date, time } = req.body;
+
+    const newClientVisit = new ClientVisit({
       ...req.body,
       client: req.clientID,
     });
+
+    const newVisitRemark = await VisitRemark.create({
+      date,
+      time,
+      visitRemark,
+    });
+
+    await newVisitRemark.save();
+
+    newClientVisit.visitRemarkId.push(newVisitRemark._id);
 
     client.clientVisits.push(newClientVisit);
 
     await newClientVisit.save();
     await client.save();
 
-    res.status(200).send("new visit client saved");
+    res.status(200).send("New client visit saved");
   } catch (err) {
     next(err);
   }
@@ -40,7 +54,7 @@ export const getClientVisits = async (req, res, next) => {
   }
 };
 
-export const getClientVisitDetails = async (req, res, next) => {
+export const getManagers = async (req, res, next) => {
   try {
     const managersData = await User.aggregate([
       {
@@ -62,9 +76,11 @@ export const getClientVisitDetails = async (req, res, next) => {
   }
 };
 
-export const getClientVisit = async (req, res, next) => {
+export const getClientVisitWithRemark = async (req, res, next) => {
   try {
-    const clientVisit = await ClientVisit.findById(req.params.id);
+    const clientVisit = await ClientVisit.findById(req.params.id).populate(
+      "visitRemarkId"
+    );
     if (!clientVisit) return next(createError(404, "no client visit found"));
 
     res.status(200).send(clientVisit);

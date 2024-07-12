@@ -210,7 +210,7 @@
     justify-content: center;
     gap: 5px;
 
-    > button {
+    > button, a>button {
       display: flex;
       align-items: center;
       justify-content: center;

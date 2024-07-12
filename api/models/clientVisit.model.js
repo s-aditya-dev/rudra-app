@@ -29,9 +29,12 @@ const clientVisitSchema = new Schema(
       required: true,
       type: String,
     },
-    visitRemark: {
-      type: String,
-    },
+    visitRemarkId: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "VisitRemark",
+      },
+    ],
     client: {
       type: Schema.Types.ObjectId,
       ref: "Client",

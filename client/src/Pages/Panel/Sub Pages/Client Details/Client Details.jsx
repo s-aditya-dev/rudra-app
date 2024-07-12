@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import newRequest from "../../../../utils/newRequest.js";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import "./Client Details.css";
@@ -472,19 +472,19 @@ const ClientDetails = () => {
           </thead>
           <tbody>
             {visits.map((visit, index) => (
-              <tr 
-              key={visit._id}
-              className={activeVisitId === visit._id ? 'active' : ''}
+              <tr
+                key={visit._id}
+                className={activeVisitId === visit._id ? 'active' : ''}
               >
-                <td data-cell = 'Sr No.' onClick={() => handleRowClick(visit._id)}>{++count}</td>
-                <td data-cell = 'Date'>{visit.date}</td>
-                <td data-cell = 'Time'>{visit.time}</td>
-                <td data-cell = 'Reference By'>{visit.referenceBy}</td>
-                <td data-cell = 'Source'>{visit.sourcingManager}</td>
-                <td data-cell = 'Relation'>{visit.relationshipManager}</td>
-                <td data-cell = 'Closing' onClick={() => handleRowClick(visit._id)}>{visit.closingManager}</td>
-                <td data-cell = 'Status' onClick={() => handleRowClick(visit._id)} className={getStatusClass(visit.status)}>{visit.status}</td>
-                <td data-cell = 'Action' className="action-buttons">
+                <td data-cell='Sr No.' onClick={() => handleRowClick(visit._id)}>{++count}</td>
+                <td data-cell='Date'>{visit.date}</td>
+                <td data-cell='Time'>{visit.time}</td>
+                <td data-cell='Reference By'>{visit.referenceBy}</td>
+                <td data-cell='Source'>{visit.sourcingManager}</td>
+                <td data-cell='Relation'>{visit.relationshipManager}</td>
+                <td data-cell='Closing' onClick={() => handleRowClick(visit._id)}>{visit.closingManager}</td>
+                <td data-cell='Status' onClick={() => handleRowClick(visit._id)} className={getStatusClass(visit.status)}>{visit.status}</td>
+                <td data-cell='Action' className="action-buttons">
                   {currentUser.admin || index === visits.length - 1 ? (
                     <>
                       <button
@@ -525,21 +525,21 @@ const ClientDetails = () => {
                         </button>
 
                       ) : null}
-
-                      <button
-                        onClick={() => handleOpenEditModal(visit._id)}
-                        className="edit blue-btn"
-                      >
-                        <span className="material-symbols-rounded">
-                          chevron_right
-                        </span>
-                      </button>
+                      <Link to={`/panel/client-details/remark/${visit._id}`}>
+                        <button
+                          className="edit blue-btn"
+                        >
+                          <span className="material-symbols-rounded">
+                            chevron_right
+                          </span>
+                        </button>
+                      </Link>
                     </>
                   ) : null}
                 </td>
               </tr>
             ))}
-          </tbody>  
+          </tbody>
         </table>
       </div>
     </div>

@@ -15,7 +15,7 @@ const AddUser = () => {
     document.getElementById('password').focus()
   };
 
-  console.log(currentUser.manager);
+  // console.log(currentUser.manager);
 
   const [user, setUser] = useState({
     username: "",

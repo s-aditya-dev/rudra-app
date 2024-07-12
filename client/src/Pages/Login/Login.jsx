@@ -86,7 +86,14 @@ const Login = () => {
           password,
         });
         localStorage.setItem("currentUser", JSON.stringify(res.data));
-        navigate("/Panel");
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+        if (password=='Password'){
+          navigate(`/Panel/edit-user/${currentUser._id}`)
+        } else{ 
+          navigate("/Panel");
+        }
+
       } catch (err) {
         if (err.message == 'Request failed with status code 404') {
           setUsernameError('Username or Password is incorrect.');

@@ -1,8 +1,8 @@
 import express from "express";
 import { getAllVisits } from "../controllers/client.controller.js";
 import {
-  getClientVisitDetails,
-  getClientVisit,
+  getManagers,
+  getClientVisitWithRemark,
   updateClientVisit,
   deleteClientVisit,
 } from "../controllers/clientVisit.controller.js";
@@ -10,8 +10,8 @@ import {
 const router = express.Router();
 
 router.get("/", getAllVisits);
-router.get("/managers", getClientVisitDetails);
-router.get("/:id", getClientVisit);
+router.get("/managers", getManagers);
+router.get("/:id", getClientVisitWithRemark);
 router.put("/:id", updateClientVisit);
 router.delete("/:id", deleteClientVisit);
 

@@ -9,10 +9,12 @@ import Maintenance from "../../Components/Maintenance/Maintenance.jsx";
 import Unauthorized from "../../Components/Unauthorized/Unauthorized.jsx";
 
 import UserList from "./Sub Pages/Users/User-list.jsx";
+import AddUser from './Sub Pages/AddUser/AddUser.jsx';
+import EditUser from "./Sub Pages/EditUser/EditUser.jsx";
 import ClientList from "./Sub Pages/Client List/Client.jsx";
 import ClientListForm from "./Sub Pages/Form/Form.jsx";
 import ClientDetails from "./Sub Pages/Client Details/Client Details.jsx";
-import AddUser from './Sub Pages/AddUser/AddUser.jsx';
+import Remark from "./Sub Pages/Remark Details/Remark.jsx";
 import AddVisit from "./Sub Pages/AddVisit/AddVisit.jsx";
 import Report from "./Sub Pages/Report/Report.jsx";
 
@@ -92,8 +94,10 @@ const Panel = () => {
     analytics: AddVisit,
     users: UserList,
     "add-user": AddUser,
+    "edit-user/:id": EditUser,
     "client-list": ClientList,
     "client-details/:id": ClientDetails,
+    "client-details/remark/:id": Remark,
     form: ClientListForm,
     task: Maintenance,
     reports: Report,
