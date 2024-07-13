@@ -11,13 +11,15 @@ const Remark = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const queryClient = useQueryClient();
-
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    
     const { isLoading, error, data } = useQuery({
         queryKey: ["clientVisitWithRemark", id],
         queryFn: () =>
             newRequest.get(`/clientVisits/${id}`).then((res) => res.data),
     });
 
+    
     const deleteRemarkMutation = useMutation({
         mutationFn: (remarkId) => newRequest.delete(`/visitRemark/${id}/${remarkId}`),
         onSuccess: () => {
@@ -38,8 +40,10 @@ const Remark = () => {
     if (error) {
         return <Loader message={`Something went wrong: ${error.message}`} />;
     }
-
+    
     const visitRemarks = data?.visitRemarkId || [];
+    const closingManager = data?.closingManager || []
+    const loadPerms = currentUser.admin || currentUser.firstName === closingManager
 
     return (
         <div className="remark-table">
@@ -54,7 +58,7 @@ const Remark = () => {
                         <th>Date</th>
                         <th>Time</th>
                         <th colSpan="3">Remark</th>
-                        <th>Action</th>
+                        {!loadPerms? null : <th>Action</th>}
                     </tr>
                 </thead>
                 <tbody>
@@ -64,13 +68,15 @@ const Remark = () => {
                             <td data-cell="Date">{new Date(remark.createdAt).toLocaleDateString()}</td>
                             <td data-cell="Time">{new Date(remark.createdAt).toLocaleTimeString()}</td>
                             <td data-cell="Remark" colSpan="3">{remark.visitRemark}</td>
-                            <td data-cell="Action" className="action-buttons">
+                            {!loadPerms? null : (
+                                <td data-cell="Action" className="action-buttons">
                                 <button className="red-btn" onClick={() => handleDelete(remark._id)}>
                                     <span className="material-symbols-rounded">
                                         delete
                                     </span>
                                 </button>
                             </td>
+                            )}
                         </tr>
                     ))}
                 </tbody>

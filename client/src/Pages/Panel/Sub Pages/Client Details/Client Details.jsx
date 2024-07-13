@@ -248,6 +248,10 @@ const ClientDetails = () => {
 
   let count = 0;
 
+  const lastVisit = visits[visits.length - 1] || [];
+
+  const loadPerms = currentUser.admin || currentUser.firstName === lastVisit.closingManager;
+
   return (
     <div className="details-container">
       <form className="details-form">
@@ -308,45 +312,51 @@ const ClientDetails = () => {
         </div>
 
         <div className="contact">
-          <div className="phone w-100 input-container">
-            <label htmlFor="phone">Phone:</label>
-            <div className="flex w-100">
-              <input
-                type="text"
-                className="w-45"
-                id="phone"
-                name="contact"
-                value={client.contact || ""}
-                readOnly={!isEditing}
-                onChange={handleInputChange}
-                placeholder="Phone Number"
-              />
-              <input
-                type="text"
-                className="w-45"
-                id="altPhone"
-                name="altContact"
-                value={client.altContact || ""}
-                readOnly={!isEditing}
-                onChange={handleInputChange}
-                placeholder="Alt Number"
-              />
+          {!loadPerms ? null : (
+            <span className="w-100">
+            <div className="phone w-100 input-container">
+              <label htmlFor="phone">Phone:</label>
+              <div className="flex w-100">
+                <input
+                  type="text"
+                  className="w-45"
+                  id="phone"
+                  name="contact"
+                  value={client.contact || ""}
+                  readOnly={!isEditing}
+                  onChange={handleInputChange}
+                  placeholder="Phone Number"
+                />
+                <input
+                  type="text"
+                  className="w-45"
+                  id="altPhone"
+                  name="altContact"
+                  value={client.altContact || ""}
+                  readOnly={!isEditing}
+                  onChange={handleInputChange}
+                  placeholder="Alt Number"
+                />
+              </div>
+              {errors.contact && <span className="error">{errors.contact}</span>}
             </div>
-            {errors.contact && <span className="error">{errors.contact}</span>}
-          </div>
-          <div className="email input-container full-flex">
-            <label htmlFor="email">Email:</label>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              value={client.email || ""}
-              readOnly={!isEditing}
-              onChange={handleInputChange}
-              placeholder="Email"
-            />
-            {errors.email && <span className="error">{errors.email}</span>}
-          </div>
+            <div className="email input-container full-flex">
+              <label htmlFor="email">Email:</label>
+              <input
+                type="text"
+                id="email"
+                name="email"
+                value={client.email || ""}
+                readOnly={!isEditing}
+                onChange={handleInputChange}
+                placeholder="Email"
+              />
+              {errors.email && <span className="error">{errors.email}</span>}
+            </div>
+          </span>
+          )}
+
+          
 
           <div className="address input-container full-flex">
             <label htmlFor="address">Address:</label>
@@ -374,7 +384,7 @@ const ClientDetails = () => {
                 disabled={!isEditing}
                 onChange={handleInputChange}
               >
-                
+
                 <option value="N/A">N/A</option>
                 <option value="1BHK">1BHK</option>
                 <option value="2BHK">2BHK</option>
@@ -489,7 +499,8 @@ const ClientDetails = () => {
                 <td data-cell='Action' className="action-buttons">
                   {currentUser.admin || index === visits.length - 1 ? (
                     <>
-                      <button
+                      {!loadPerms? null : (
+                        <button
                         onClick={() => handleOpenEditModal(visit._id)}
                         className="edit yellow-btn"
                       >
@@ -497,6 +508,7 @@ const ClientDetails = () => {
                           more_horiz
                         </span>
                       </button>
+                      )}
                       <EditVisitModal
                         visitData={{
                           time: visit.time,
@@ -515,6 +527,7 @@ const ClientDetails = () => {
                         onClose={handleCloseEditModal}
                         isAdmin={currentUser.admin}
                       />
+
                       {currentUser.admin ? (
                         <button
                           // style={{ cursor: "pointer" }}
