@@ -149,7 +149,7 @@
   > div{
     width: 100%;
     height: 100%;
-    border: white 2px dashed;
+    border: var(--color-dark) 2px dashed;
     border-radius: 15px;
 
     display: flex;
