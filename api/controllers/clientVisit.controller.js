@@ -11,23 +11,25 @@ export const createClientVisit = async (req, res, next) => {
     if (!client) {
       return res.status(404).send("Client not found");
     }
-
-    const { visitRemark, date, time } = req.body;
-
+    
     const newClientVisit = new ClientVisit({
       ...req.body,
       client: req.clientID,
     });
+    
+    const { visitRemark, date, time } = req.body;
 
-    const newVisitRemark = await VisitRemark.create({
-      date,
-      time,
-      visitRemark,
-    });
+    if (visitRemark) {
+      const newVisitRemark = await VisitRemark.create({
+        visitRemark,
+        date,
+        time,
+      });
 
-    await newVisitRemark.save();
+      await newVisitRemark.save();
 
-    newClientVisit.visitRemarkId.push(newVisitRemark._id);
+      newClientVisit.visitRemarkId.push(newVisitRemark._id);
+    }
 
     client.clientVisits.push(newClientVisit);
 

@@ -57,7 +57,8 @@ const EditUser = () => {
         const yearRegex = /^\d{4}$/;
         const pincodeRegex = /^\d{6}$/;
         const phoneRegex = /^\d{10}$/;
-        const passwordRegex = /^(?!password$).*$/i;
+        const passLengthRegex = /^[a-zA-Z0-9]{6,}$/;
+        const passwordRegex = /^(?!password$)[a-zA-Z0-9]*$/i;
 
         const isLeapYear = (year) => {
             return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
@@ -111,7 +112,9 @@ const EditUser = () => {
                                         if (!user.password) {
                                             newErrors.password = "Password is required";
                                         } else if (!passwordRegex.test(user.password)) {
-                                            newErrors.password = "Password cannot be Password";
+                                            newErrors.password = "Password cannot be Password or cannot contain any special character";
+                                        } else if (!passLengthRegex.test(user.password)) {
+                                            newErrors.password = "Password should be atleats 6 characters";
                                         } else {
                                             if (!user.manager) {
                                                 newErrors.manager = "Manager selection is required";

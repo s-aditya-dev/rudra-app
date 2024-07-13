@@ -137,7 +137,7 @@ function ClientList() {
     }
   };
 
-  if (!data.length) {
+  if (data && !data.length) {
     return (
       <div className="empty-client-table">
         <div>

@@ -14,14 +14,18 @@ const ClientListForm = () => {
   });
 
   const [managers, setManagers] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
 
   useEffect(() => {
     if (data) {
-      setManagers(
-        data.map((manager) => ({
+      const sortedManagers = data
+        .map((manager) => ({
           ...manager,
         }))
-      );
+        .sort((a, b) => a.firstName.localeCompare(b.firstName));
+        
+      setManagers(sortedManagers);
     }
   }, [data]);
 
@@ -107,9 +111,7 @@ const ClientListForm = () => {
             newErrors.contact = "Please enter the valid alt contact";
           } else {
             // Validate email
-            if (!user.email) {
-              newErrors.email = "Email is required";
-            } else if (!emailRegex.test(user.email)) {
+            if (user.email && !emailRegex.test(user.email)) {
               newErrors.email = "Email must be valid";
             } else {
               // Validate address
@@ -181,6 +183,8 @@ const ClientListForm = () => {
       return;
     }
 
+    setIsSubmitting(true);
+
     let budget = parseFloat(user.budget);
     user.contact = parseInt(user.contact);
 
@@ -210,10 +214,10 @@ const ClientListForm = () => {
       await newRequest.post(`/clients/${response.data._id}/clientVisits`, {
         ...visitsourceData,
       });
-
       navigate("/panel");
     } catch (err) {
       console.log(err);
+      setIsSubmitting(false);
     }
 
     e.target.reset();
@@ -415,7 +419,7 @@ const ClientListForm = () => {
 
                 {managers.map(
                   (manager) =>
-                    (manager.manager === "source" ||  manager.manager === "relation") && (
+                    (manager.manager === "source" ||  manager.manager === "relation" || manager.manager === 'closing') && (
                       <option key={manager._id} value={manager.firstName}>
                         {manager.firstName} {manager.lastName}
                       </option>
@@ -437,7 +441,7 @@ const ClientListForm = () => {
                 </option>
                 {managers.map(
                   (manager) =>
-                    (manager.manager === "source" ||  manager.manager === "relation") && (
+                    (manager.manager === "source" ||  manager.manager === "relation" || manager.manager === 'closing') && (
                       <option key={manager._id} value={manager.firstName}>
                         {manager.firstName} {manager.lastName}
                       </option>
@@ -459,7 +463,7 @@ const ClientListForm = () => {
                 </option>
                 {managers.map(
                   (manager) =>
-                    manager.manager === "closing" && (
+                    (manager.manager === "source" ||  manager.manager === "relation" || manager.manager === 'closing') && (
                       <option key={manager._id} value={manager.firstName}>
                         {manager.firstName} {manager.lastName}
                       </option>
@@ -500,7 +504,7 @@ const ClientListForm = () => {
         </div>
 
         <div className="controls flex">
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={isSubmitting}>Submit</button>
         </div>
       </form>
     </div>
