@@ -90,7 +90,7 @@ const ClientDetails = () => {
     let tempErrors = {};
 
     const nameRegex = /^[A-Za-z]{3,}$/;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^(N\/A|[^\s@]+@[^\s@]+\.[^\s@]+)$/;
     const contactRegex = /^\d{10}$/;
     const budgetRegex = /^(?!0\d)\d*(\.\d+)?$/;
 
@@ -337,7 +337,7 @@ const ClientDetails = () => {
           <div className="email input-container full-flex">
             <label htmlFor="email">Email:</label>
             <input
-              type="email"
+              type="text"
               id="email"
               name="email"
               value={client.email || ""}
@@ -374,6 +374,8 @@ const ClientDetails = () => {
                 disabled={!isEditing}
                 onChange={handleInputChange}
               >
+                
+                <option value="N/A">N/A</option>
                 <option value="1BHK">1BHK</option>
                 <option value="2BHK">2BHK</option>
                 <option value="2.5BHK">2.5BHK</option>
@@ -392,7 +394,7 @@ const ClientDetails = () => {
                   type="text"
                   id="budget"
                   name="budget"
-                  value={client.budget || ""}
+                  value={client.budget || "0"}
                   readOnly={!isEditing}
                   onChange={handleInputChange}
                   placeholder="Budget"

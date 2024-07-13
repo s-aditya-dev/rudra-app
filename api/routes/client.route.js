@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  createClientWithVisit,
   createClient,
   getClient,
   getClients,
@@ -9,6 +10,7 @@ import {
 
 const router = express.Router();
 
+router.post("/withVisit", createClientWithVisit);
 router.post("/", createClient);
 router.get("/:id", getClient);
 router.get("/", getClients);

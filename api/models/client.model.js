@@ -18,11 +18,11 @@ const clientSchema = new Schema(
     },
     address: {
       type: String,
-      required: true,
+      // required: true,
     },
     occupation: {
       type: String,
-      required: true,
+      // required: true,
     },
     contact: {
       type: Number,
@@ -36,11 +36,11 @@ const clientSchema = new Schema(
     },
     requirement: {
       type: String,
-      required: true,
+      // required: true,
     },
     budget: {
       type: Number,
-      required: true,
+      // required: true,
     },
     note: {
       type: String,

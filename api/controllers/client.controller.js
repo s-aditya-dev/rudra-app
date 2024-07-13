@@ -1,5 +1,6 @@
 import Client from "../models/client.model.js";
 import ClientVisit from "../models/clientVisit.model.js";
+import VisitRemark from "../models/visitRemark.model.js";
 import createError from "../utils/createError.js";
 import ClientCounter from "../models/clientCounter.model.js";
 
@@ -25,6 +26,55 @@ export const createClient = async (req, res, next) => {
     next(err);
   }
 };
+
+
+export const createClientWithVisit = async (req, res, next) => {
+  try {
+    const cd = await ClientCounter.findOneAndUpdate(
+      { id: "autoval" },
+      { $inc: { seq: 1 } },
+      { new: true, upsert: true }
+    );
+
+    if (cd === null) {
+      const newval = new ClientCounter({ id: "autoval", seq: 1 });
+      await newval.save();
+    }
+
+    const newClient = await Client.create({
+      clientId: cd ? cd.seq : 1,
+      ...req.body,
+    });
+
+    const newClientVisit = await ClientVisit.create({
+      ...req.body,
+      client: newClient._id,
+    });
+
+    const { visitRemark, date, time } = req.body;
+
+    if (visitRemark) {
+      const newVisitRemark = await VisitRemark.create({
+        visitRemark,
+        date,
+        time,
+      });
+
+      newClientVisit.visitRemarkId.push(newVisitRemark._id);
+
+      await newVisitRemark.save();
+    }
+    newClient.clientVisits.push(newClientVisit._id);
+
+    await newClientVisit.save();
+    await newClient.save();
+
+    res.status(200).send("New client visit saved");
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 export const getClients = async (req, res, next) => {
   try {

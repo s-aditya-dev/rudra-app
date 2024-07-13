@@ -85,7 +85,7 @@ const ClientListForm = () => {
 
   const validateForm = () => {
     const nameRegex = /^[A-Za-z]{3,}$/;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^(N\/A|[^\s@]+@[^\s@]+\.[^\s@]+)$/;
     const contactRegex = /^\d{10}$/;
     const budgetRegex = /^(?!0\d)\d*(\.\d+)?$/;
     const newErrors = {};
@@ -111,7 +111,7 @@ const ClientListForm = () => {
             newErrors.contact = "Please enter the valid alt contact";
           } else {
             // Validate email
-            if (user.email && !emailRegex.test(user.email)) {
+            if (!user.email || !emailRegex.test(user.email)) {
               newErrors.email = "Email must be valid";
             } else {
               // Validate address
@@ -275,9 +275,9 @@ const ClientListForm = () => {
             {errors.contact && <span className="error">{errors.contact}</span>}
           </div>
           <div className="email input-container flex-width-48">
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="text">Email:</label>
             <input
-              type="email"
+              type="text"
               name="email"
               onChange={handleChange}
               id="email"
@@ -325,6 +325,7 @@ const ClientListForm = () => {
                   <option value="" disabled selected>
                     Select Requirement
                   </option>
+                  <option value="N/A">N/A</option>
                   <option value="1BHK">1BHK</option>
                   <option value="2BHK">2BHK</option>
                   <option value="2.5BHK">2.5BHK</option>
@@ -368,8 +369,6 @@ const ClientListForm = () => {
             </div>
           </div>
 
-
-        
 
         <div className= 'AddVisit col30'>
           <div className="date-time-container flex-width-48 input-container">
@@ -417,6 +416,8 @@ const ClientListForm = () => {
                   Select Source
                 </option>
 
+                <option value="N/A">N/A</option>
+
                 {managers.map(
                   (manager) =>
                     (manager.manager === "source" ||  manager.manager === "relation" || manager.manager === 'closing') && (
@@ -439,6 +440,9 @@ const ClientListForm = () => {
                 <option value="" disabled selected>
                   Select Relation
                 </option>
+
+                <option value="N/A">N/A</option>
+
                 {managers.map(
                   (manager) =>
                     (manager.manager === "source" ||  manager.manager === "relation" || manager.manager === 'closing') && (
@@ -461,6 +465,9 @@ const ClientListForm = () => {
                 <option value="" disabled selected>
                   Select Closing
                 </option>
+
+                <option value="N/A">N/A</option>
+
                 {managers.map(
                   (manager) =>
                     (manager.manager === "source" ||  manager.manager === "relation" || manager.manager === 'closing') && (
@@ -483,6 +490,8 @@ const ClientListForm = () => {
                 <option value="" disabled selected>
                   Select Status
                 </option>
+
+                <option value="N/A">N/A</option>
                 <option value="warm">Warm</option>
                 <option value="cold">Cold</option>
                 <option value="lost">Lost</option>
