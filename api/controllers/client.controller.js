@@ -87,7 +87,7 @@ export const getUserClients = async (req, res, next) => {
     });
 
     if (!filteredClients.length) {
-      return next(createError(404, 'No clients found for the given criteria'));
+      return next(createError(403, 'No clients found for the given criteria'));
     }
 
 

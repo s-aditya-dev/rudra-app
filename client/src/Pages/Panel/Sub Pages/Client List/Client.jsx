@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 // Util Components
 import Loader from "../../../../Components/Loader/Loader.jsx";
+import NoData from "../../../../Assets/no-data.jsx"
 
 function ClientList() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -13,15 +14,32 @@ function ClientList() {
   let queryKey = [];
   let queryFn = () => {};
 
-  if (currentUser.admin) {
+  if (currentUser.admin || currentUser.manager == 'sales head') {
     queryKey = ["clients"];
-    queryFn = () => newRequest.get("/clients").then((res) => res.data);
+    queryFn = () => 
+      newRequest.get("/clients")
+        .then((res) => res.data)
+        .catch((error) => {
+          if (error.response && error.response.status === 403) {
+            return [];
+          } else {
+            console.error("Error fetching clients:", error);
+            throw error;
+          }
+        });
   } else {
     queryKey = ["userClients", currentUser.manager, currentUser.firstName];
     queryFn = () =>
-      newRequest
-        .get(`/user-clients?managerType=${currentUser.manager}&firstName=${currentUser.firstName}`)
-        .then((res) => res.data);
+      newRequest.get(`/user-clients?managerType=${currentUser.manager}&firstName=${currentUser.firstName}`)
+        .then((res) => res.data)
+        .catch((error) => {
+          if (error.response && error.response.status === 403) {
+            return [];
+          } else {
+            console.error("Error fetching user clients:", error);
+            throw error;
+          }
+        });
   }
 
   const { isLoading, error, data } = useQuery({
@@ -35,7 +53,6 @@ function ClientList() {
   const [activeClientId, setActiveClientId] = useState(null);
 
   const handleRowClick = (clientId) => {
-    // setActiveClientId(clientId);
     setActiveClientId(prevClientId => prevClientId === clientId ? null : clientId);
   };
 
@@ -52,6 +69,7 @@ function ClientList() {
   if (error) {
     return <Loader message={`Something went wrong: ${error.message}`} />;
   }
+
 
   const searchFields = (client, term) => {
     const fullName = `${client.firstName} ${client.lastName}`.toLowerCase();
@@ -119,6 +137,20 @@ function ClientList() {
     }
   };
 
+  if (!data.length) {
+    return (
+      <div className="empty-client-table">
+        <div>
+          <NoData />
+          <p>No Clients data available</p>
+          <Link to="/panel/form">
+            <button>Add Client</button>
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="client-table">
       <div className="client-table-header">
@@ -165,30 +197,30 @@ function ClientList() {
             const lastVisit = client.clientVisits[client.clientVisits.length - 1];
 
             return (
-              <tr 
-              key={client._id}
-              className={activeClientId === client._id ? 'active' : ''}
-              
+              <tr
+                key={client._id}
+                className={activeClientId === client._id ? 'active' : ''}
+
               >
-                <td data-cell= 'Client ID' onClick={() => handleRowClick(client._id)}>{client.clientId}</td>
-                <td data-cell = 'Name' onClick={() => handleRowClick(client._id)}>{client.firstName + " " + client.lastName}</td>
-                <td data-cell = 'Requirement'>{client.requirement}</td>
-                <td data-cell = 'Budget'>{formatBudget(client.budget)}</td>
+                <td data-cell='Client ID' onClick={() => handleRowClick(client._id)}>{client.clientId}</td>
+                <td data-cell='Name' onClick={() => handleRowClick(client._id)}>{client.firstName + " " + client.lastName}</td>
+                <td data-cell='Requirement'>{client.requirement}</td>
+                <td data-cell='Budget'>{formatBudget(client.budget)}</td>
                 {lastVisit && (
                   <>
-                    <td data-cell = 'Reference'>{lastVisit.referenceBy}</td>
-                    <td data-cell = 'Source'>{lastVisit.sourcingManager}</td>
-                    <td data-cell = 'Relation'>{lastVisit.relationshipManager}</td>
-                    <td data-cell = 'Closing'>{lastVisit.closingManager}</td>
-                    <td data-cell = 'Status' className={getStatusClass(lastVisit.status)}>{lastVisit.status}</td>
+                    <td data-cell='Reference'>{lastVisit.referenceBy}</td>
+                    <td data-cell='Source'>{lastVisit.sourcingManager}</td>
+                    <td data-cell='Relation'>{lastVisit.relationshipManager}</td>
+                    <td data-cell='Closing'>{lastVisit.closingManager}</td>
+                    <td data-cell='Status' className={getStatusClass(lastVisit.status)}>{lastVisit.status}</td>
                   </>
                 )}
                 <td>
-                    <Link to={`/panel/client-details/${client._id}`}>
-                      <button>
-                        <span className="material-symbols-rounded">chevron_right</span>
-                      </button>
-                    </Link>
+                  <Link to={`/panel/client-details/${client._id}`}>
+                    <button>
+                      <span className="material-symbols-rounded">chevron_right</span>
+                    </button>
+                  </Link>
                 </td>
               </tr>
             );
