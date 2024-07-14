@@ -252,6 +252,33 @@ const ClientDetails = () => {
 
   const loadPerms = currentUser.admin || currentUser.firstName === lastVisit.closingManager;
 
+  const [managers, setManagers] = useState([]);
+
+  const { isManagerLoading, isManagerError, data: ManagerData } = useQuery({
+    queryKey: ["managers"],
+    queryFn: () =>
+      newRequest.get("/clientVisits/managers").then((res) => res.data),
+  });
+
+  useEffect(() => {
+    if (ManagerData) {
+      setManagers(ManagerData);
+    }
+  }, [ManagerData]);
+
+  if (isLoading || isManagerLoading) {
+    return <Loader />;
+  }
+
+  if (error || isManagerError) {
+    return <Loader message={`Something went wrong: ${error?.message || isManagerError.message}`} />;
+  }
+
+  const getDisplayName = (username) => {
+    const manager = managers.find(m => m.username === username);
+    return manager ? manager.firstName : username;
+  };
+
   return (
     <div className="details-container">
       <form className="details-form">
@@ -314,49 +341,49 @@ const ClientDetails = () => {
         <div className="contact">
           {!loadPerms ? null : (
             <span className="w-100">
-            <div className="phone w-100 input-container">
-              <label htmlFor="phone">Phone:</label>
-              <div className="flex w-100">
-                <input
-                  type="text"
-                  className="w-45"
-                  id="phone"
-                  name="contact"
-                  value={client.contact || ""}
-                  readOnly={!isEditing}
-                  onChange={handleInputChange}
-                  placeholder="Phone Number"
-                />
-                <input
-                  type="text"
-                  className="w-45"
-                  id="altPhone"
-                  name="altContact"
-                  value={client.altContact || ""}
-                  readOnly={!isEditing}
-                  onChange={handleInputChange}
-                  placeholder="Alt Number"
-                />
+              <div className="phone w-100 input-container">
+                <label htmlFor="phone">Phone:</label>
+                <div className="flex w-100">
+                  <input
+                    type="text"
+                    className="w-45"
+                    id="phone"
+                    name="contact"
+                    value={client.contact || ""}
+                    readOnly={!isEditing}
+                    onChange={handleInputChange}
+                    placeholder="Phone Number"
+                  />
+                  <input
+                    type="text"
+                    className="w-45"
+                    id="altPhone"
+                    name="altContact"
+                    value={client.altContact || ""}
+                    readOnly={!isEditing}
+                    onChange={handleInputChange}
+                    placeholder="Alt Number"
+                  />
+                </div>
+                {errors.contact && <span className="error">{errors.contact}</span>}
               </div>
-              {errors.contact && <span className="error">{errors.contact}</span>}
-            </div>
-            <div className="email input-container full-flex">
-              <label htmlFor="email">Email:</label>
-              <input
-                type="text"
-                id="email"
-                name="email"
-                value={client.email || ""}
-                readOnly={!isEditing}
-                onChange={handleInputChange}
-                placeholder="Email"
-              />
-              {errors.email && <span className="error">{errors.email}</span>}
-            </div>
-          </span>
+              <div className="email input-container full-flex">
+                <label htmlFor="email">Email:</label>
+                <input
+                  type="text"
+                  id="email"
+                  name="email"
+                  value={client.email || ""}
+                  readOnly={!isEditing}
+                  onChange={handleInputChange}
+                  placeholder="Email"
+                />
+                {errors.email && <span className="error">{errors.email}</span>}
+              </div>
+            </span>
           )}
 
-          
+
 
           <div className="address input-container full-flex">
             <label htmlFor="address">Address:</label>
@@ -492,22 +519,22 @@ const ClientDetails = () => {
                 <td data-cell='Date'>{visit.date}</td>
                 <td data-cell='Time'>{visit.time}</td>
                 <td data-cell='Reference By'>{visit.referenceBy}</td>
-                <td data-cell='Source'>{visit.sourcingManager}</td>
-                <td data-cell='Relation'>{visit.relationshipManager}</td>
-                <td data-cell='Closing' onClick={() => handleRowClick(visit._id)}>{visit.closingManager}</td>
+                <td data-cell='Source'>{getDisplayName(visit.sourcingManager)}</td>
+                <td data-cell='Relation'>{getDisplayName(visit.relationshipManager)}</td>
+                <td data-cell='Closing' onClick={() => handleRowClick(visit._id)}>{getDisplayName(visit.closingManager)}</td>
                 <td data-cell='Status' onClick={() => handleRowClick(visit._id)} className={getStatusClass(visit.status)}>{visit.status}</td>
                 <td data-cell='Action' className="action-buttons">
                   {currentUser.admin || index === visits.length - 1 ? (
                     <>
-                      {!loadPerms? null : (
+                      {!loadPerms ? null : (
                         <button
-                        onClick={() => handleOpenEditModal(visit._id)}
-                        className="edit yellow-btn"
-                      >
-                        <span className="material-symbols-rounded">
-                          more_horiz
-                        </span>
-                      </button>
+                          onClick={() => handleOpenEditModal(visit._id)}
+                          className="edit yellow-btn"
+                        >
+                          <span className="material-symbols-rounded">
+                            more_horiz
+                          </span>
+                        </button>
                       )}
                       <EditVisitModal
                         visitData={{

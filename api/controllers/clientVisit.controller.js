@@ -61,6 +61,7 @@ export const getManagers = async (req, res, next) => {
     const managersData = await User.aggregate([
       {
         $project: {
+          username: 1,
           firstName: 1,
           lastName: 1,
           manager: 1,

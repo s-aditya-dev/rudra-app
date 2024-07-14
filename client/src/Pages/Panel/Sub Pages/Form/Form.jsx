@@ -223,6 +223,8 @@ const ClientListForm = () => {
     e.target.reset();
   };
 
+  console.log(managers)
+
   return (
     <div className="form-container">
       <h3>Client Form</h3>
@@ -421,7 +423,7 @@ const ClientListForm = () => {
                 {managers.map(
                   (manager) =>
                     (manager.manager === "source" ||  manager.manager === "relation" || manager.manager === 'closing') && (
-                      <option key={manager._id} value={manager.firstName}>
+                      <option key={manager._id} value={manager.username}>
                         {manager.firstName} {manager.lastName}
                       </option>
                     )
@@ -446,7 +448,7 @@ const ClientListForm = () => {
                 {managers.map(
                   (manager) =>
                     (manager.manager === "source" ||  manager.manager === "relation" || manager.manager === 'closing') && (
-                      <option key={manager._id} value={manager.firstName}>
+                      <option key={manager._id} value={manager.username}>
                         {manager.firstName} {manager.lastName}
                       </option>
                     )
@@ -471,7 +473,7 @@ const ClientListForm = () => {
                 {managers.map(
                   (manager) =>
                     (manager.manager === "source" ||  manager.manager === "relation" || manager.manager === 'closing') && (
-                      <option key={manager._id} value={manager.firstName}>
+                      <option key={manager._id} value={manager.username}>
                         {manager.firstName} {manager.lastName}
                       </option>
                     )

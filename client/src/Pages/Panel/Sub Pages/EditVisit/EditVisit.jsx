@@ -42,9 +42,15 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
 
     useEffect(() => {
         if (data) {
-            setManagers(data);
+          const sortedManagers = data
+            .map((manager) => ({
+              ...manager,
+            }))
+            .sort((a, b) => a.firstName.localeCompare(b.firstName));
+            
+          setManagers(sortedManagers);
         }
-    }, [data]);
+      }, [data]);
 
     useEffect(() => {
         if (!isOpen) {
@@ -191,10 +197,11 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
                                 <option value="" disabled>
                                     Select Source
                                 </option>
+                                <option value="N/A">N/A</option>
                                 {managers.map(
                                     (manager) =>
-                                        manager.manager === "source" && (
-                                            <option key={manager._id} value={manager.firstName}>
+                                        (manager.manager === "source" ||  manager.manager === "relation" || manager.manager === 'closing') && (
+                                            <option key={manager._id} value={manager.username}>
                                                 {manager.firstName} {manager.lastName}
                                             </option>
                                         )
@@ -216,10 +223,11 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
                                 <option value="" disabled>
                                     Select Relation
                                 </option>
+                                <option value="N/A">N/A</option>
                                 {managers.map(
                                     (manager) =>
-                                        manager.manager === "relation" && (
-                                            <option key={manager._id} value={manager.firstName}>
+                                        (manager.manager === "source" ||  manager.manager === "relation" || manager.manager === 'closing') && (
+                                            <option key={manager._id} value={manager.username}>
                                                 {manager.firstName} {manager.lastName}
                                             </option>
                                         )
@@ -241,10 +249,11 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
                                 <option value="" disabled>
                                     Select Closing
                                 </option>
+                                <option value="N/A">N/A</option>
                                 {managers.map(
                                     (manager) =>
-                                        manager.manager === "closing" && (
-                                            <option key={manager._id} value={manager.firstName}>
+                                        (manager.manager === "source" ||  manager.manager === "relation" || manager.manager === 'closing') && (
+                                            <option key={manager._id} value={manager.username}>
                                                 {manager.firstName} {manager.lastName}
                                             </option>
                                         )
@@ -266,6 +275,7 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
                                 <option value="" disabled>
                                     Select Status
                                 </option>
+                                <option value="N/A">N/A</option>
                                 <option value="warm">Warm</option>
                                 <option value="cold">Cold</option>
                                 <option value="lost">Lost</option>

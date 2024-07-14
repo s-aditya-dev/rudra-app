@@ -9,67 +9,41 @@ import Loader from "../../../../Components/Loader/Loader.jsx";
 import NoData from "../../../../Assets/no-data.jsx"
 
 function ClientList() {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
-  let queryKey = [];
-  let queryFn = () => {};
-
-  if (currentUser.admin || currentUser.manager == 'sales head') {
-    queryKey = ["clients"];
-    queryFn = () => 
-      newRequest.get("/clients")
-        .then((res) => res.data)
-        .catch((error) => {
-          if (error.response && error.response.status === 403) {
-            return [];
-          } else {
-            console.error("Error fetching clients:", error);
-            throw error;
-          }
-        });
-  } else {
-    queryKey = ["userClients", currentUser.manager, currentUser.firstName];
-    queryFn = () =>
-      newRequest.get(`/user-clients?managerType=${currentUser.manager}&firstName=${currentUser.firstName}`)
-        .then((res) => res.data)
-        .catch((error) => {
-          if (error.response && error.response.status === 403) {
-            return [];
-          } else {
-            console.error("Error fetching user clients:", error);
-            throw error;
-          }
-        });
-  }
-
-  const { isLoading, error, data } = useQuery({
-    queryKey,
-    queryFn,
-  });
-
+  // State Initialization
   const [clients, setClients] = useState([]);
+  const [managers, setManagers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortNewestFirst, setSortNewestFirst] = useState(true);
   const [activeClientId, setActiveClientId] = useState(null);
 
-  const handleRowClick = (clientId) => {
-    setActiveClientId(prevClientId => prevClientId === clientId ? null : clientId);
+  // Current User
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  // Data Fetching
+  const { isLoading: isClientLoading, error: clientError, data: clientData } = useQuery({
+    queryKey: currentUser.admin || currentUser.manager === 'sales head' ? ["clients"] : ["userClients", currentUser.manager, currentUser.firstName],
+    queryFn: () => newRequest.get(currentUser.admin || currentUser.manager === 'sales head' ? "/clients" : `/user-clients?managerType=${currentUser.manager}&firstName=${currentUser.firstName}`)
+      .then((res) => res.data)
+      .catch((error) => {
+        if (error.response && error.response.status === 403) {
+          return [];
+        } else {
+          console.error("Error fetching clients:", error);
+          throw error;
+        }
+      })
+  });
+
+  const { isLoading: isManagerLoading, error: managerError, data: managerData } = useQuery({
+    queryKey: ["managers"],
+    queryFn: () => newRequest.get("/clientVisits/managers").then((res) => res.data)
+  });
+
+  // Helper Functions
+  const getDisplayName = (username) => {
+    const manager = managers.find(m => m.username === username);
+    return manager ? manager.firstName : username;
   };
-
-  useEffect(() => {
-    if (data) {
-      setClients(data.map((client) => ({ ...client })));
-    }
-  }, [data]);
-
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (error) {
-    return <Loader message={`Something went wrong: ${error.message}`} />;
-  }
-
 
   const searchFields = (client, term) => {
     const fullName = `${client.firstName} ${client.lastName}`.toLowerCase();
@@ -78,38 +52,16 @@ function ClientList() {
 
     return (
       fullName.includes(termLower) ||
-      (client.clientId &&
-        client.clientId.toString().toLowerCase().includes(termLower)) ||
-      (client.requirement &&
-        client.requirement.toLowerCase().includes(termLower)) ||
-      (client.budget &&
-        client.budget.toString().toLowerCase().includes(termLower)) ||
+      (client.clientId && client.clientId.toString().toLowerCase().includes(termLower)) ||
+      (client.requirement && client.requirement.toLowerCase().includes(termLower)) ||
+      (client.budget && client.budget.toString().toLowerCase().includes(termLower)) ||
       (lastVisit &&
-        ((lastVisit.referenceBy &&
-          lastVisit.referenceBy.toLowerCase().includes(termLower)) ||
-          (lastVisit.sourcingManager &&
-            lastVisit.sourcingManager.toLowerCase().includes(termLower)) ||
-          (lastVisit.relationshipManager &&
-            lastVisit.relationshipManager.toLowerCase().includes(termLower)) ||
-          (lastVisit.closingManager &&
-            lastVisit.closingManager.toLowerCase().includes(termLower)) ||
-          (lastVisit.status &&
-            lastVisit.status.toLowerCase().includes(termLower))))
+        ((lastVisit.referenceBy && lastVisit.referenceBy.toLowerCase().includes(termLower)) ||
+          (lastVisit.sourcingManager && lastVisit.sourcingManager.toLowerCase().includes(termLower)) ||
+          (lastVisit.relationshipManager && lastVisit.relationshipManager.toLowerCase().includes(termLower)) ||
+          (lastVisit.closingManager && lastVisit.closingManager.toLowerCase().includes(termLower)) ||
+          (lastVisit.status && lastVisit.status.toLowerCase().includes(termLower))))
     );
-  };
-
-  const filteredClients = clients.filter((client) =>
-    searchFields(client, searchTerm)
-  );
-
-  const sortedClients = filteredClients.sort((a, b) => {
-    return sortNewestFirst
-      ? b.clientId - a.clientId
-      : a.clientId - b.clientId;
-  });
-
-  const toggleSortOrder = () => {
-    setSortNewestFirst(!sortNewestFirst);
   };
 
   const getStatusClass = (status) => {
@@ -137,7 +89,42 @@ function ClientList() {
     }
   };
 
-  if (data && !data.length) {
+  // Event Handlers
+  const handleRowClick = (clientId) => {
+    setActiveClientId(prevClientId => prevClientId === clientId ? null : clientId);
+  };
+
+  const toggleSortOrder = () => {
+    setSortNewestFirst(!sortNewestFirst);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // Effect Hooks
+  useEffect(() => {
+    if (clientData) {
+      setClients(clientData);
+    }
+  }, [clientData]);
+
+  useEffect(() => {
+    if (managerData) {
+      setManagers(managerData);
+    }
+  }, [managerData]);
+
+  // Conditional Rendering
+  if (isClientLoading || isManagerLoading) {
+    return <Loader />;
+  }
+
+  if (clientError || managerError) {
+    return <Loader message={`Something went wrong: ${clientError?.message || managerError.message}`} />;
+  }
+
+  if (clientData && !clientData.length) {
     return (
       <div className="empty-client-table">
         <div>
@@ -148,8 +135,17 @@ function ClientList() {
           </Link>
         </div>
       </div>
-    )
+    );
   }
+
+  // Data Filtering and Sorting
+  const filteredClients = clients.filter((client) => searchFields(client, searchTerm));
+
+  const sortedClients = filteredClients.sort((a, b) => {
+    return sortNewestFirst ? b.clientId - a.clientId : a.clientId - b.clientId;
+  });
+
+  // Render JSX
 
   return (
     <div className="client-table">
@@ -167,7 +163,7 @@ function ClientList() {
             placeholder="Search..."
           />
         </div>
-        <th>{`Record Count: ${clients.length}`}</th>
+        <th>{`Record Count: ${filteredClients.length}`}</th>
         <div className="controls">
           <button className="order-sort" onClick={toggleSortOrder}>
             <span className="material-symbols-rounded">swap_vert</span>
@@ -200,7 +196,6 @@ function ClientList() {
               <tr
                 key={client._id}
                 className={activeClientId === client._id ? 'active' : ''}
-
               >
                 <td data-cell='Client ID' onClick={() => handleRowClick(client._id)}>{client.clientId}</td>
                 <td data-cell='Name' onClick={() => handleRowClick(client._id)}>{client.firstName + " " + client.lastName}</td>
@@ -209,9 +204,9 @@ function ClientList() {
                 {lastVisit && (
                   <>
                     <td data-cell='Reference'>{lastVisit.referenceBy}</td>
-                    <td data-cell='Source'>{lastVisit.sourcingManager}</td>
-                    <td data-cell='Relation'>{lastVisit.relationshipManager}</td>
-                    <td data-cell='Closing'>{lastVisit.closingManager}</td>
+                    <td data-cell='Source'>{getDisplayName(lastVisit.sourcingManager)}</td>
+                    <td data-cell='Relation'>{getDisplayName(lastVisit.relationshipManager)}</td>
+                    <td data-cell='Closing'>{getDisplayName(lastVisit.closingManager)}</td>
                     <td data-cell='Status' className={getStatusClass(lastVisit.status)}>{lastVisit.status}</td>
                   </>
                 )}
