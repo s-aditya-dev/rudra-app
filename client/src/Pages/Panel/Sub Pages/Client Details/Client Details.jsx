@@ -6,6 +6,7 @@ import "./Client Details.css";
 
 import AddVisitModal from "../AddVisit/AddVisit.jsx";
 import EditVisitModal from "../EditVisit/EditVisit.jsx";
+import Loader from "../../../../Components/Loader/Loader.jsx";
 
 const ClientDetails = () => {
   const navigate = useNavigate();
