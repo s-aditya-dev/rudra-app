@@ -43,7 +43,7 @@ const Remark = () => {
     
     const visitRemarks = data?.visitRemarkId || [];
     const closingManager = data?.closingManager || []
-    const loadPerms = currentUser.admin || currentUser.firstName === closingManager
+    const loadPerms = currentUser.admin || currentUser.username === closingManager
 
     return (
         <div className="remark-table">

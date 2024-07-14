@@ -251,7 +251,7 @@ const ClientDetails = () => {
 
   const lastVisit = visits[visits.length - 1] || [];
 
-  const loadPerms = currentUser.admin || currentUser.firstName === lastVisit.closingManager;
+  const loadPerms = currentUser.admin || currentUser.username === lastVisit.closingManager;
 
   const [managers, setManagers] = useState([]);
 
