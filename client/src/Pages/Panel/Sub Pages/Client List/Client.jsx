@@ -167,7 +167,7 @@ function ClientList() {
             placeholder="Search..."
           />
         </div>
-        <th>{`Record Count: ${clients.length}`}</th>
+        <th>{`Record Count: ${filteredClients.length}`}</th>
         <div className="controls">
           <button className="order-sort" onClick={toggleSortOrder}>
             <span className="material-symbols-rounded">swap_vert</span>
