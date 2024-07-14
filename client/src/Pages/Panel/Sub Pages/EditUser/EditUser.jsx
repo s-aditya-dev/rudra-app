@@ -158,7 +158,6 @@ const EditUser = () => {
         }
     }, [data]);
 
-    console.log('Data from useQuery:', data);  // Log the data outside of useQuery
  // Log the data outside of useQuery
 
     const mutation = useMutation({

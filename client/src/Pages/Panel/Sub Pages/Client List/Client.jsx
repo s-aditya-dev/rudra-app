@@ -52,7 +52,6 @@ function ClientList() {
 
     return (
       fullName.includes(termLower) ||
-      (client.clientId && client.clientId.toString().toLowerCase().includes(termLower)) ||
       (client.requirement && client.requirement.toLowerCase().includes(termLower)) ||
       (client.budget && client.budget.toString().toLowerCase().includes(termLower)) ||
       (lastVisit &&
@@ -87,6 +86,11 @@ function ClientList() {
     } else {
       return amount.toFixed(); // No conversion needed, ensure two decimal places
     }
+  };
+
+  const formatDate = (date) => {
+    const options = { day: '2-digit', month: 'short', year: '2-digit' };
+    return new Date(date).toLocaleDateString('en-GB', options).replace(/ /g, '-');
   };
 
   // Event Handlers
@@ -163,7 +167,7 @@ function ClientList() {
             placeholder="Search..."
           />
         </div>
-        <th>{`Record Count: ${filteredClients.length}`}</th>
+        <div className="counter">{`Record Count: ${filteredClients.length}`}</div>
         <div className="controls">
           <button className="order-sort" onClick={toggleSortOrder}>
             <span className="material-symbols-rounded">swap_vert</span>
@@ -176,7 +180,7 @@ function ClientList() {
       <table>
         <thead>
           <tr>
-            <th>#</th>
+            <th>Date</th>
             <th>Name</th>
             <th>Requirement</th>
             <th>Budget</th>
@@ -197,8 +201,12 @@ function ClientList() {
                 key={client._id}
                 className={activeClientId === client._id ? 'active' : ''}
               >
-                <td data-cell='Client ID' onClick={() => handleRowClick(client._id)}>{client.clientId}</td>
-                <td data-cell='Name' onClick={() => handleRowClick(client._id)}>{client.firstName + " " + client.lastName}</td>
+                <td data-cell='Last Visit Date' onClick={() => handleRowClick(client._id)}>
+                  {lastVisit ? formatDate(lastVisit.date) : 'N/A'}
+                </td>
+                <td data-cell='Name' onClick={() => handleRowClick(client._id)}>
+                  {client.firstName + " " + client.lastName}
+                </td>
                 <td data-cell='Requirement'>{client.requirement}</td>
                 <td data-cell='Budget'>{formatBudget(client.budget)}</td>
                 {lastVisit && (
@@ -207,7 +215,9 @@ function ClientList() {
                     <td data-cell='Source'>{getDisplayName(lastVisit.sourcingManager)}</td>
                     <td data-cell='Relation'>{getDisplayName(lastVisit.relationshipManager)}</td>
                     <td data-cell='Closing'>{getDisplayName(lastVisit.closingManager)}</td>
-                    <td data-cell='Status' className={getStatusClass(lastVisit.status)}>{lastVisit.status}</td>
+                    <td data-cell='Status' className={getStatusClass(lastVisit.status)}>
+                      {lastVisit.status}
+                    </td>
                   </>
                 )}
                 <td>
@@ -218,6 +228,7 @@ function ClientList() {
                   </Link>
                 </td>
               </tr>
+
             );
           })}
         </tbody>

@@ -525,60 +525,61 @@ const ClientDetails = () => {
                 <td data-cell='Closing' onClick={() => handleRowClick(visit._id)}>{getDisplayName(visit.closingManager)}</td>
                 <td data-cell='Status' onClick={() => handleRowClick(visit._id)} className={getStatusClass(visit.status)}>{visit.status}</td>
                 <td data-cell='Action' className="action-buttons">
-                  {currentUser.admin || index === visits.length - 1 ? (
-                    <>
-                      {!loadPerms ? null : (
-                        <button
-                          onClick={() => handleOpenEditModal(visit._id)}
-                          className="edit yellow-btn"
-                        >
-                          <span className="material-symbols-rounded">
-                            more_horiz
-                          </span>
-                        </button>
-                      )}
-                      <EditVisitModal
-                        visitData={{
-                          time: visit.time,
-                          date: visit.date,
-                          referenceBy: visit.referenceBy,
-                          sourcingManager: visit.sourcingManager,
-                          relationshipManager: visit.relationshipManager,
-                          closingManager: visit.closingManager,
-                          status: visit.status,
-                          visitRemark: visit.visitRemark,
-                        }}
-                        clientId={client._id}
-                        clientName={client.firstName}
-                        visitID={visit._id}
-                        isOpen={isEditModalOpen && editVisitId === visit._id}
-                        onClose={handleCloseEditModal}
-                        isAdmin={currentUser.admin}
-                      />
+                  <div>
+                    {currentUser.admin || index === visits.length - 1 ? (
+                      <>
+                        {!loadPerms ? null : (
+                          <button
+                            onClick={() => handleOpenEditModal(visit._id)}
+                            className="edit yellow-btn"
+                          >
+                            <span className="material-symbols-rounded">
+                              more_horiz
+                            </span>
+                          </button>
+                        )}
+                        <EditVisitModal
+                          visitData={{
+                            time: visit.time,
+                            date: visit.date,
+                            referenceBy: visit.referenceBy,
+                            sourcingManager: visit.sourcingManager,
+                            relationshipManager: visit.relationshipManager,
+                            closingManager: visit.closingManager,
+                            status: visit.status,
+                            visitRemark: visit.visitRemark,
+                          }}
+                          clientId={client._id}
+                          clientName={client.firstName}
+                          visitID={visit._id}
+                          isOpen={isEditModalOpen && editVisitId === visit._id}
+                          onClose={handleCloseEditModal}
+                          isAdmin={currentUser.admin}
+                        />
 
-                      {currentUser.admin ? (
-                        <button
-                          // style={{ cursor: "pointer" }}
-                          className="delete red-btn"
-                          onClick={() => handleDeleteVisit(visit._id)}
-                        >
-                          <span className="material-symbols-rounded">
-                            delete_forever
-                          </span>
-                        </button>
+                        {currentUser.admin ? (
+                          <button
+                            className="delete red-btn"
+                            onClick={() => handleDeleteVisit(visit._id)}
+                          >
+                            <span className="material-symbols-rounded">
+                              delete_forever
+                            </span>
+                          </button>
 
-                      ) : null}
-                      <Link to={`/panel/client-details/remark/${visit._id}`}>
-                        <button
-                          className="edit blue-btn"
-                        >
-                          <span className="material-symbols-rounded">
-                            chevron_right
-                          </span>
-                        </button>
-                      </Link>
-                    </>
-                  ) : null}
+                        ) : null}
+                        <Link to={`/panel/client-details/remark/${visit._id}`}>
+                          <button
+                            className="edit blue-btn"
+                          >
+                            <span className="material-symbols-rounded">
+                              chevron_right
+                            </span>
+                          </button>
+                        </Link>
+                      </>
+                    ) : null}
+                  </div>
                 </td>
               </tr>
             ))}
