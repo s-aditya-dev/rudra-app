@@ -11,6 +11,10 @@ import clientVisitRoute from "./routes/clientVisit.route.js";
 import visitsRoute from "./routes/visits.route.js";
 import visitRemarkRoute from "./routes/visitRemark.route.js";
 
+import { frontEndPort } from './settings.js';
+
+// server.js
+
 const port = 8000;
 
 const app = express();
@@ -28,8 +32,7 @@ const connect = async () => {
 
 app.use(
   cors({
-    // origin: process.env.Port,
-    origin: "https://rudra-app-frontend.onrender.com",
+    origin: frontEndPort,
     credentials: true,
   })
 );
