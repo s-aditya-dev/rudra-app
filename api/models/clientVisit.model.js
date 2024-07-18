@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const clientVisitSchema = new Schema(
   {
     date: {
-      type: String,
+      type: Date,
     },
     time: {
       type: String,

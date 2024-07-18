@@ -21,7 +21,7 @@ function ClientList() {
 
   // Data Fetching
   const { isLoading: isClientLoading, error: clientError, data: clientData } = useQuery({
-    queryKey: currentUser.admin || currentUser.manager === 'sales head' ? ["clients"] : ["userClients", currentUser.manager, currentUser.firstName],
+    queryKey: currentUser.admin || currentUser.manager === 'sales head' ? ["clients"] : ["userClients", currentUser.manager, currentUser.username],
     queryFn: () => newRequest.get(currentUser.admin || currentUser.manager === 'sales head' ? "/clients" : `/user-clients?managerType=${currentUser.manager}&firstName=${currentUser.username}`)
       .then((res) => res.data)
       .catch((error) => {

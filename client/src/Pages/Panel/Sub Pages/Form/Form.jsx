@@ -45,7 +45,7 @@ const ClientListForm = () => {
 
   const [visitsourceData, setVisitsourceData] = useState({
     time: "",
-    date: "",
+    date: new Date(),
     referenceBy: "",
     sourcingManager: "",
     relationshipManager: "",

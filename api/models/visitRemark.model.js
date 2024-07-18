@@ -8,7 +8,7 @@ const visitRemarkSchema = new Schema(
       required: true,
     },
     date: {
-      type: String,
+      type: Date,
     },
     time: {
       type: String,

@@ -247,6 +247,11 @@ const ClientDetails = () => {
     setActiveVisitId(prevVisitId => prevVisitId === VisitId ? null : VisitId);
   };
 
+  const formatDate = (date) => {
+    const options = { day: '2-digit', month: 'short', year: 'numeric' };
+    return new Date(date).toLocaleDateString('en-GB', options).replace(/ /g, '-');
+};
+
   let count = 0;
 
   const lastVisit = visits[visits.length - 1] || [];
@@ -517,7 +522,7 @@ const ClientDetails = () => {
                 className={activeVisitId === visit._id ? 'active' : ''}
               >
                 <td data-cell='Sr No.' onClick={() => handleRowClick(visit._id)}>{++count}</td>
-                <td data-cell='Date'>{visit.date}</td>
+                <td data-cell='Date'>{formatDate(visit.date)}</td>
                 <td data-cell='Time'>{visit.time}</td>
                 <td data-cell='Reference By'>{visit.referenceBy}</td>
                 <td data-cell='Source'>{getDisplayName(visit.sourcingManager)}</td>

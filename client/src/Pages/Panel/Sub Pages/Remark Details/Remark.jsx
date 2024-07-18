@@ -42,6 +42,11 @@ const Remark = () => {
         setActiveRemarkId((prevRemarkId) => (prevRemarkId === remarkId ? null : remarkId));
     };
 
+    const formatDate = (date) => {
+        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+        return new Date(date).toLocaleDateString('en-GB', options).replace(/ /g, '-');
+    };
+
     if (isLoading) {
         return <Loader />;
     }
@@ -77,10 +82,9 @@ const Remark = () => {
                             className={activeRemarkId === remark._id ? 'active' : ''}
                         >
                             <td data-cell="Sr No:" onClick={() => handleRowClick(remark._id)}>{index + 1}</td>
-                            <td data-cell="Date" onClick={() => handleRowClick(remark._id)}>{new Date(remark.createdAt).toLocaleDateString()}</td>
-                            <td data-cell="Time">{new Date(remark.createdAt).toLocaleTimeString()}</td>
-                            {/* <td data-cell="Remark" colSpan="3">{remark.visitRemark}</td> */}
-                            <td data-cell="Remark" colSpan="3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis excepturi illum earum culpa quod eum ipsam sit, eaque, velit ratione laboriosam totam laudantium tempora dolore corrupti doloremque enim quam. Harum!</td>
+                            <td data-cell="Date" onClick={() => handleRowClick(remark._id)}>{formatDate(remark.date)}</td>
+                            <td data-cell="Time">{remark.time}</td>
+                            <td data-cell="Remark" colSpan="3">{remark.visitRemark}</td>
                             {hasAccess && (
                                 <td data-cell="Action" className="action-buttons">
                                     <div>
