@@ -130,22 +130,18 @@
             /* color selection */
             .customCheckBoxInput:checked+.customCheckBoxWrapper .customCheckBox.red {
                 background-color: var(--color-danger);
-                color: var(--color-white);
             }
 
             .customCheckBoxInput:checked+.customCheckBoxWrapper .customCheckBox.blue {
                 background-color: var(--color-hold);
-                color: var(--color-white);
             }
 
             .customCheckBoxInput:checked+.customCheckBoxWrapper .customCheckBox.green {
                 background-color: var(--color-success);
-                color: var(--color-white);
             }
 
             .customCheckBoxInput:checked+.customCheckBoxWrapper .customCheckBox.yellow {
                 background-color: var(--color-warning);
-                color: var(--color-white);
             }
         }
     }
@@ -172,8 +168,6 @@
 
 @media (width < 800px) {
     .filter{
-        width: 140%;
-        /* height: fit-content; */
         padding: 30px 20px;
         left: auto;
     }
