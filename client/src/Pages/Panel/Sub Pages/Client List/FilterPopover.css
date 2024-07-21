@@ -1,0 +1,185 @@
+.filter {
+    width: clamp(270px, 20%, 280px);
+    height: 55svh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    background: var(--color-background);
+    box-shadow: inset 0px -25px 15px var(--color-light-white);
+    border: 2px solid var(--color-dark);
+    border-radius: var(--border-radius-1);
+    color: var(--color-dark);
+    padding: 15px 20px;
+    position: absolute;
+    /* top: 100; */
+    left: 0;
+    top: 200%;
+    z-index: 5;
+
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+
+    h5 {
+        font-size: .9rem;
+        font-weight: 500;
+    }
+
+    >div {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        >div {
+            display: grid;
+            gap: 10px;
+
+            .date-container {
+                display: grid;
+            }
+
+            label {
+                font-size: .8rem;
+                font-weight: 600;
+                margin-bottom: 5px;
+            }
+
+            input,
+            select {
+                font-family: Poppins;
+                padding: 10px;
+                background: var(--color-white);
+                color: var(--color-dark);
+                border: 2px solid var(--color-info-dark);
+                border-radius: var(--border-radius-1);
+                width: 100%;
+            }
+
+            input:focus,
+            select:focus {
+                border-color: var(--color-dark);
+                outline: none;
+            }
+        }
+    }
+
+    .budget-selector {
+        .price-input {
+            display: flex;
+            gap: 6%;
+
+            >div:not(.seperator) {
+                width: 47%;
+            }
+        }
+    }
+
+
+    .requirement-selector,
+    .status-selector {
+
+        padding: 0;
+
+        >div {
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .customCheckBoxHolder {
+            margin: 5px;
+
+            .customCheckBox {
+                width: fit-content;
+                cursor: pointer;
+                user-select: none;
+                padding: 2px 8px;
+                background-color: var(--color-background);
+                color: var(--color-light-dark);
+                border-radius: 5px;
+                box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 1px 0px inset, rgba(255, 255, 255, 0.17) 0px 1px 1px 0px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+                transition-duration: 300ms;
+                transition-property: color, background-color, box-shadow;
+
+                .inner {
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                }
+            }
+
+            .customCheckBox:hover {
+                background-color: var(--color-light-white);
+                color: var(--color-dark);
+            }
+
+
+            .customCheckBoxInput {
+                display: none;
+            }
+
+            .customCheckBoxInput:checked+.customCheckBoxWrapper .customCheckBox {
+                background-color: var(--color-dark);
+                color: var(--color-white);
+            }
+
+            /* color selection */
+            .customCheckBoxInput:checked+.customCheckBoxWrapper .customCheckBox.red {
+                background-color: var(--color-danger);
+                color: var(--color-white);
+            }
+
+            .customCheckBoxInput:checked+.customCheckBoxWrapper .customCheckBox.blue {
+                background-color: var(--color-hold);
+                color: var(--color-white);
+            }
+
+            .customCheckBoxInput:checked+.customCheckBoxWrapper .customCheckBox.green {
+                background-color: var(--color-success);
+                color: var(--color-white);
+            }
+
+            .customCheckBoxInput:checked+.customCheckBoxWrapper .customCheckBox.yellow {
+                background-color: var(--color-warning);
+                color: var(--color-white);
+            }
+        }
+    }
+
+    .filter-controls{
+        > button{
+            background: var(--color-hold);
+            color: white;
+            font-family: Poppins;
+            font-weight: 600;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            transition: all .3s ease-in-out;
+        }
+
+        button:hover {
+            background: var(--color-dark-hold);
+        }
+    }
+}
+
+/* Responsive design */
+
+@media (width < 800px) {
+    .filter{
+        width: 140%;
+        /* height: fit-content; */
+        padding: 30px 20px;
+        left: auto;
+    }
+}
+
+@media (width < 500px) {
+    .filter{
+        height: fit-content;
+    }}

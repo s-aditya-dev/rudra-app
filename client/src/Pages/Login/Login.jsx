@@ -112,6 +112,8 @@ const Login = () => {
         <h2><RudraLogo primaryFill={'var(--color-main)'} logoWidth={'120px'} /></h2>
         <form onSubmit={handleSubmit}>
           <div className="textbox-main">
+          <span className="material-symbols-rounded">alternate_email</span>
+
             <input
               className="textbox"
               type="text"
@@ -128,6 +130,8 @@ const Login = () => {
           </div>
 
           <div className="textbox-main">
+          <span class="material-symbols-rounded">key_vertical</span>
+
             <input
               className="textbox"
               type={passwordVisible ? "text" : "password"}

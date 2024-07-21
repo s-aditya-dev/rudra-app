@@ -10,7 +10,45 @@
   border-radius: var(--card-border-radius);
   font-family: Poppins, sans-serif;
 
-  > div {
+  .filter-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .filter-btns {
+      position: relative;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 20px;
+
+      > button {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 5px;
+
+        font-family: Poppins;
+        font-size: 0.9rem;
+        font-weight: 600;
+
+        padding: 5px 10px;
+        border: none;
+        border-radius: 50px;
+        /* background: #000; */
+        background: var(--color-dark);
+        color: var(--color-background);
+      }
+
+      > button:hover {
+        background: rgba(var(--color-dark-rgba), 0.8);
+      }
+    }
+  }
+
+  > div:not(.filter) {
     height: 90px;
     padding: 30px;
     display: flex;
@@ -20,11 +58,11 @@
     flex-wrap: wrap;
 
     .searchbar {
-      display: flex;
-      line-height: 28px;
-      align-items: center;
-      position: relative;
       max-width: 190px;
+      display: flex;
+      align-items: center;
+      line-height: 28px;
+      position: relative;
 
       input {
         width: 100%;
@@ -61,7 +99,7 @@
       }
     }
 
-    .counter{
+    .counter {
       font-size: 1.2rem;
       font-weight: 600;
     }
@@ -147,11 +185,11 @@
   }
 }
 
-.empty-client-table{
+.empty-client-table {
   width: 100%;
   height: 100%;
 
-  > div{
+  > div {
     width: 100%;
     height: 100%;
     border: var(--color-dark) 2px dashed;
@@ -186,9 +224,8 @@
 /* Responsive design */
 
 @media (width < 1200px) {
-
-  .empty-client-table{
-    height: 80svh;  
+  .empty-client-table {
+    height: 80svh;
   }
 
   /* body {
@@ -200,6 +237,10 @@
     --tr-padding: 50px;
     margin: 50px auto;
     max-height: fit-content;
+
+    > div:not(.filter) {
+      height: fit-content !important;
+    }
 
     table thead tr {
       padding: 0 10px;
@@ -284,11 +325,10 @@
 }
 
 @media (width < 800px) {
-  .client-table{
-      >div {
-          height: fit-content;
-          justify-content: space-around;
-      }
+  .client-table {
+    > div:not(.filter) {
+      justify-content: space-around;
+    }
   }
 }
 

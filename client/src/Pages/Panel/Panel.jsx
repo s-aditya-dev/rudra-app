@@ -115,12 +115,12 @@ const Panel = () => {
 
 
 
+  // Function to toggle dark mode
   const [darkMode, setDarkMode] = useState(() => {
     const savedDarkMode = localStorage.getItem('dark-mode');
     return savedDarkMode ? JSON.parse(savedDarkMode) : false;
   });
 
-  // Function to toggle dark mode
   const toggleDarkMode = () => {
     setDarkMode(prevDarkMode => {
       const newDarkMode = !prevDarkMode;

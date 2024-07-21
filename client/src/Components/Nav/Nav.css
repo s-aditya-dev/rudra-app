@@ -117,7 +117,7 @@ nav .user-profile h2{
         padding: 0 var(--padding-1);
         height: 4.6rem;
         width: 100%;
-        z-index: 2;
+        z-index: 10;
         box-shadow: 0 1rem 1rem var(--color-light);
         margin: 0;
     }
