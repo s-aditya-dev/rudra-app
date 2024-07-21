@@ -247,10 +247,16 @@ const ClientDetails = () => {
     setActiveVisitId(prevVisitId => prevVisitId === VisitId ? null : VisitId);
   };
 
-  const formatDate = (date) => {
-    const options = { day: '2-digit', month: 'short', year: 'numeric' };
-    return new Date(date).toLocaleDateString('en-GB', options).replace(/ /g, '-');
-};
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const month = date.toLocaleString('en-GB', { month: 'short', timeZone: 'UTC' });
+    const year = String(date.getUTCFullYear()).slice(2);
+  
+    return `${day}-${month}-${year}`;
+  };
+  
+
 
   let count = 0;
 

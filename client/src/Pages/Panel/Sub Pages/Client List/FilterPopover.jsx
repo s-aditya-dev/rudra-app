@@ -53,6 +53,18 @@ const FilterPopover = ({ isOpen, onClose, onApplyFilters, managers }) => {
         onClose(); // Close the popover after applying filters
     };
 
+    const handleClearFilters = () => {
+        setStartDate('');
+        setEndDate('');
+        setMinBudget('');
+        setMaxBudget('');
+        setSelectedStatuses([]);
+        setSelectedManager1('');
+        setSelectedManager2('');
+        setSelectedManager3('');
+        setSelectedRequirements([]);
+    };
+
     const handleClickOutside = (event) => {
         if (popoverRef.current && !popoverRef.current.contains(event.target)) {
             onClose();
@@ -184,6 +196,7 @@ const FilterPopover = ({ isOpen, onClose, onApplyFilters, managers }) => {
             </div>
 
             <div className="filter-controls">
+                <button onClick={handleClearFilters}>Clear</button>
                 <button onClick={handleApplyFilters}>Apply Filter</button>
             </div>
         </div>

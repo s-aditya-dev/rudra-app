@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import "./AddVisit.css";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import newRequest from "../../../../utils/newRequest.js";
 
@@ -25,9 +24,25 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
 
     const [errors, setErrors] = useState({});
 
+    const formatDateString = (dateString) => {
+        const date = new Date(dateString);
+        return date.toISOString().split('T')[0]; // "YYYY-MM-DD"
+    };
+
+    const formatTimeString = (dateString) => {
+        const date = new Date(dateString);
+        return date.toTimeString().split(' ')[0].slice(0, 5); // "HH:MM"
+    };
+
     useEffect(() => {
         if (visitData) {
-            setFormData(visitData);
+            setFormData({
+                ...visitData,
+                date: visitData.date ? formatDateString(visitData.date) : "",
+
+                
+            });
+            console.log(visitData.date)
         }
     }, [visitData]);
 
@@ -42,15 +57,15 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
 
     useEffect(() => {
         if (data) {
-          const sortedManagers = data
-            .map((manager) => ({
-              ...manager,
-            }))
-            .sort((a, b) => a.firstName.localeCompare(b.firstName));
-            
-          setManagers(sortedManagers);
+            const sortedManagers = data
+                .map((manager) => ({
+                    ...manager,
+                }))
+                .sort((a, b) => a.firstName.localeCompare(b.firstName));
+
+            setManagers(sortedManagers);
         }
-      }, [data]);
+    }, [data]);
 
     useEffect(() => {
         if (!isOpen) {
@@ -126,12 +141,12 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
 
         try {
             await newRequest.put(`/clientVisits/${visitID}`, { ...formData });
-      
+
             navigate(`/panel/client-details/${clientId}`);
             console.log(`${visitID} Form submitted with data:`, formData);
-          } catch (err) {
+        } catch (err) {
             console.error("Error submitting form:", err);
-          }
+        }
         onClose(e);
     };
 
@@ -151,7 +166,7 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
                                 onChange={handleInputChange}
                                 id="visitDate"
                                 className="w-45"
-                                readOnly = {!isAdmin}
+                                readOnly={!isAdmin}
                                 required
                             />
                             <input
@@ -161,7 +176,7 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
                                 onChange={handleInputChange}
                                 id="visitTime"
                                 className="w-45"
-                                readOnly = {!isAdmin}
+                                readOnly={!isAdmin}
                                 required
                             />
                         </div>
@@ -177,7 +192,7 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
                             value={formData.referenceBy}
                             onChange={handleInputChange}
                             placeholder="Enter your Reference"
-                            readOnly = {!isAdmin}
+                            readOnly={!isAdmin}
                             required
                         />
                         {errors.referenceBy && <span className="errMessage">{errors.referenceBy}</span>}
@@ -191,7 +206,7 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
                                 onChange={handleInputChange}
                                 value={formData.sourcingManager}
                                 name="sourcingManager"
-                                disabled = {!isAdmin}
+                                disabled={!isAdmin}
                                 required
                             >
                                 <option value="" disabled>
@@ -200,7 +215,7 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
                                 <option value="N/A">N/A</option>
                                 {managers.map(
                                     (manager) =>
-                                        (manager.manager === "source" ||  manager.manager === "relation" || manager.manager === 'closing') && (
+                                        (manager.manager === "source" || manager.manager === "relation" || manager.manager === 'closing') && (
                                             <option key={manager._id} value={manager.username}>
                                                 {manager.firstName} {manager.lastName}
                                             </option>
@@ -217,7 +232,7 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
                                 onChange={handleInputChange}
                                 value={formData.relationshipManager}
                                 name="relationshipManager"
-                                disabled = {!isAdmin}
+                                disabled={!isAdmin}
                                 required
                             >
                                 <option value="" disabled>
@@ -226,7 +241,7 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
                                 <option value="N/A">N/A</option>
                                 {managers.map(
                                     (manager) =>
-                                        (manager.manager === "source" ||  manager.manager === "relation" || manager.manager === 'closing') && (
+                                        (manager.manager === "source" || manager.manager === "relation" || manager.manager === 'closing') && (
                                             <option key={manager._id} value={manager.username}>
                                                 {manager.firstName} {manager.lastName}
                                             </option>
@@ -243,7 +258,7 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
                                 onChange={handleInputChange}
                                 value={formData.closingManager}
                                 name="closingManager"
-                                disabled = {!isAdmin}
+                                disabled={!isAdmin}
                                 required
                             >
                                 <option value="" disabled>
@@ -252,7 +267,7 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
                                 <option value="N/A">N/A</option>
                                 {managers.map(
                                     (manager) =>
-                                        (manager.manager === "source" ||  manager.manager === "relation" || manager.manager === 'closing') && (
+                                        (manager.manager === "source" || manager.manager === "relation" || manager.manager === 'closing') && (
                                             <option key={manager._id} value={manager.username}>
                                                 {manager.firstName} {manager.lastName}
                                             </option>
@@ -269,7 +284,7 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
                                 onChange={handleInputChange}
                                 value={formData.status}
                                 name="status"
-                                disabled = {false}
+                                disabled={false}
                                 required
                             >
                                 <option value="" disabled>
@@ -285,7 +300,7 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
                         </div>
                     </div>
 
-                    <div className="remark input-container w-100">
+                    {/* <div className="remark input-container w-100">
                         <label htmlFor="remark">Remark:</label>
                         <textarea
                             onChange={handleInputChange}
@@ -293,9 +308,9 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
                             name="visitRemark"
                             id="remark"
                             placeholder="Enter your remark"
-                            readOnly = {false}
+                            readOnly={false}
                         ></textarea>
-                    </div>
+                    </div> */}
                     <div className="controls w-100">
                         <button type="button" onClick={onClose}>
                             Cancel

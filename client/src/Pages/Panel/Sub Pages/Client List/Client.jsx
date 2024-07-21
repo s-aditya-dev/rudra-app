@@ -4,7 +4,7 @@ import newRequest from "../../../../utils/newRequest.js";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import Loader from "../../../../Components/Loader/Loader.jsx";
-import NoData from "../../../../Assets/no-data.jsx";
+import {NoData, NoFilterData} from "../../../../Assets/no-data.jsx";
 import FilterPopover from './FilterPopover'; // Import the popover component
 import { getDisplayName, searchFields, formatBudget, formatDate, getStatusClass } from './utils';
 import ClientRow from './ClientRow';
@@ -207,33 +207,41 @@ function ClientList() {
           </Link>
         </div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Name</th>
-            <th>Requirement</th>
-            <th>Budget</th>
-            <th>Reference</th>
-            <th>Source</th>
-            <th>Relation</th>
-            <th>Closing</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedClients.map((client) => (
-            <ClientRow
-              key={client._id}
-              client={client}
-              activeClientId={activeClientId}
-              onRowClick={handleRowClick}
-              managers={managers}
-            />
-          ))}
-        </tbody>
-      </table>
+
+      {filteredClients.length ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Name</th>
+              <th>Requirement</th>
+              <th>Budget</th>
+              <th>Reference</th>
+              <th>Source</th>
+              <th>Relation</th>
+              <th>Closing</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sortedClients.map((client) => (
+              <ClientRow
+                key={client._id}
+                client={client}
+                activeClientId={activeClientId}
+                onRowClick={handleRowClick}
+                managers={managers}
+              />
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <div className="empty-data">
+          <NoFilterData/>
+          <p>No data meets the current filter criteria.</p>
+        </div>
+      )}
     </div>
   );
 }
