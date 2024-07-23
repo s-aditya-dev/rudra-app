@@ -4,7 +4,7 @@ import newRequest from "../../../../utils/newRequest.js";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import Loader from "../../../../Components/Loader/Loader.jsx";
-import {NoData, NoFilterData} from "../../../../Assets/no-data.jsx";
+import { NoData, NoFilterData } from "../../../../Assets/no-data.jsx";
 import FilterPopover from './FilterPopover'; // Import the popover component
 import { getDisplayName, searchFields, formatBudget, formatDate, getStatusClass } from './utils';
 import ClientRow from './ClientRow';
@@ -112,9 +112,12 @@ function ClientList() {
       }
 
       // Manager filters
-      if (filters.selectedManager1 && lastVisit.sourcingManager !== filters.selectedManager1) return false;
-      if (filters.selectedManager2 && lastVisit.relationshipManager !== filters.selectedManager2) return false;
-      if (filters.selectedManager3 && lastVisit.closingManager !== filters.selectedManager3) return false;
+      console.log(`Source:${filters.selectedManager1},Relation:${filters.selectedManager2},c:${filters.selectedManager3}`)
+      if (lastVisit) {
+        if (filters.selectedManager1 && lastVisit.sourcingManager !== filters.selectedManager1) return false;
+        if (filters.selectedManager2 && lastVisit.relationshipManager !== filters.selectedManager2) return false;
+        if (filters.selectedManager3 && lastVisit.closingManager !== filters.selectedManager3) return false;
+      } else return false;
 
       // Requirements filter
       if (filters.selectedRequirements.length > 0) {
@@ -238,7 +241,7 @@ function ClientList() {
         </table>
       ) : (
         <div className="empty-data">
-          <NoFilterData/>
+          <NoFilterData />
           <p>No data meets the current filter criteria.</p>
         </div>
       )}
