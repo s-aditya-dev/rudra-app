@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import newRequest from "../../../../utils/newRequest.js";
 import Loader from "../../../../Components/Loader/Loader.jsx";
+import AddRemarkModal from './AddRemark.jsx'; // Import the RemarkModal component
 import './Remark.css';
 
 const fetchClientVisit = (id) => {
@@ -19,6 +20,7 @@ const Remark = () => {
     const queryClient = useQueryClient();
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     const [activeRemarkId, setActiveRemarkId] = useState(null);
+    const [isRemarkModalOpen, setIsRemarkModalOpen] = useState(false); // State for modal visibility
 
     const { isLoading, error, data } = useQuery({
         queryKey: ["clientVisitWithRemark", id],
@@ -61,9 +63,9 @@ const Remark = () => {
 
     return (
         <div className="remark-table">
-            <div>
+            <div className="remark-header">
                 <h2>Client Remark</h2>
-                {/* <button>Add Remark</button> */}
+                <button onClick={() => setIsRemarkModalOpen(true)}>Add Remark</button>
             </div>
             <table>
                 <thead>
@@ -100,6 +102,7 @@ const Remark = () => {
                     ))}
                 </tbody>
             </table>
+            <AddRemarkModal isOpen={isRemarkModalOpen} onClose={() => setIsRemarkModalOpen(false)} visitID={id}/>
         </div>
     );
 };

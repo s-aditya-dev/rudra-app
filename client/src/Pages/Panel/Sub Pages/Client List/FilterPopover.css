@@ -1,6 +1,7 @@
 .filter {
     width: clamp(270px, 20%, 280px);
     height: 55svh;
+    min-height: 380px;
     overflow-y: auto;
     scrollbar-width: thin;
     background: var(--color-background);

@@ -1,0 +1,111 @@
+.remark-modal-overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* width: 100vw;
+    height: 100vh; */
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: hsla(0, 0%, 0%, 0.356);
+    z-index: 10;
+
+
+
+    .add-remark-container {
+        box-sizing: border-box;
+        background: var(--color-white);
+        border-radius: var(--card-border-radius);
+        height: clamp(150px, 40vh, 280px);
+        min-width: 150px;
+        max-width: 320px;
+        margin: 15px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        scale: 0;
+        z-index: 11;
+        transition: all ease-in 0.3s;
+
+
+        .input-field {
+            height: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4%;
+
+            input,
+            textarea {
+                padding: 10px;
+                background: var(--color-white);
+                color: var(--color-dark);
+                border: 2px solid var(--color-info-dark);
+                border-radius: var(--border-radius-1);
+                position: relative;
+                outline: none;
+            }
+
+            input:focus,
+            textarea:focus {
+                border-color: var(--color-dark);
+            }
+
+            input {
+                width: 48%;
+                height: 50px;
+                font-size: .85rem;
+            }
+
+            textarea {
+                width: 100%;
+                height: 85px;
+                resize: none;
+            }
+        }
+
+        button {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            padding: 10px 20px;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--border-radius-1);
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: var(--color-primary-dark);
+        }
+    }
+
+
+}
+
+.remark-modal-overlay.active {
+    display: flex;
+    .add-remark-container {
+        animation: scaleIn 0.3s ease-in forwards;
+    }
+}
+
+@keyframes scaleIn {
+
+    0% {
+        scale: 0;
+    }
+
+    100% {
+        scale: 1;
+    }
+
+}
+
+
