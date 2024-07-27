@@ -12,6 +12,7 @@ import UserList from "./Sub Pages/Users/User-list.jsx";
 import AddUser from './Sub Pages/AddUser/AddUser.jsx';
 import EditUser from "./Sub Pages/EditUser/EditUser.jsx";
 import ClientList from "./Sub Pages/Client List/Client.jsx";
+import {DumpedClients} from "./Sub Pages/Dump/Dump.jsx";
 import ClientListForm from "./Sub Pages/Form/Form.jsx";
 import ClientDetails from "./Sub Pages/Client Details/Client Details.jsx";
 import Remark from "./Sub Pages/Remark Details/Remark.jsx";
@@ -96,6 +97,7 @@ const Panel = () => {
     "add-user": AddUser,
     "edit-user/:id": EditUser,
     "client-list": ClientList,
+    "dump-list": DumpedClients,
     "client-details/:id": ClientDetails,
     "client-details/remark/:id": Remark,
     form: ClientListForm,

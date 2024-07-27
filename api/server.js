@@ -10,6 +10,7 @@ import userClientRoute from "./routes/userClient.route.js";
 import clientVisitRoute from "./routes/clientVisit.route.js";
 import visitsRoute from "./routes/visits.route.js";
 import visitRemarkRoute from "./routes/visitRemark.route.js";
+import DumpRoute from "./routes/dump.route.js"
 
 import { frontEndPort } from './settings.js';
 
@@ -55,6 +56,7 @@ app.use(
 );
 app.use("/api/clientVisits", visitsRoute);
 app.use("/api/visitRemark", visitRemarkRoute);
+app.use("/api/dump-clients", DumpRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;

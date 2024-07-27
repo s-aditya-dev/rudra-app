@@ -42,6 +42,10 @@ function Report() {
   const handleEmployeeChange = (event) => {
     setSelectedEmployee(event.target.value);
   };
+ 
+  const formatDate = (dateString) => {
+    return `${day}-${month}-${year}`;
+  };
 
   const exportToExcel = () => {
     if (!dataClients || dataClients.length === 0) {
@@ -60,6 +64,7 @@ function Report() {
       const lastVisit = client.clientVisits[client.clientVisits.length - 1] || {};
 
       return {
+        "Date": formatDate(lastVisit.date) || '',
         "Name": `${client.firstName} ${client.lastName}`,
         "Contact": client.contact || '',
         "Alt Contact": client.altContact || '',

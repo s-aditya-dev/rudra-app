@@ -205,6 +205,9 @@ function ClientList() {
           <button className="order-sort" onClick={toggleSortOrder}>
             <span className="material-symbols-rounded">swap_vert</span>
           </button>
+          <Link to="/panel/dump-list">
+            <button>Dump Client</button>
+          </Link>
           <Link to="/panel/form">
             <button>Add Client</button>
           </Link>

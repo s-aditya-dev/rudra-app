@@ -53,8 +53,12 @@ const AddRemarkModal = ({ isOpen, onClose, visitID }) => {
 
   useEffect(() => {
     if (isOpen) {
-      setDate('');
-      setTime('');
+      const now = new Date();
+      const currentDate = now.toISOString().split('T')[0];
+      const currentTime = now.toTimeString().split(' ')[0].slice(0, 5);
+
+      setDate(currentDate);
+      setTime(currentTime);
       setRemark('');
       setError('');
     }
@@ -75,11 +79,13 @@ const AddRemarkModal = ({ isOpen, onClose, visitID }) => {
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
+            disabled = {true}
           />
           <input
             type="time"
             value={time}
             onChange={(e) => setTime(e.target.value)}
+            disabled = {true}
           />
           <textarea
             value={visitRemark}

@@ -69,18 +69,22 @@ label span{
 }
 /* Global styles */
 .status-lost{
+    text-transform: capitalize;
     color: var(--color-danger) !important;
 }
 
 .status-cold{
+    text-transform: capitalize;
     color: var(--color-hold) !important;
 }
 
 .status-warm{
+    text-transform: capitalize;
     color: var(--color-warning) !important;
 }
 
 .status-booked{
+    text-transform: capitalize;
     color: var(--color-success) !important;
 }
 
