@@ -215,7 +215,7 @@ export const getUserClients = async (req, res, next) => {
 
       return (
         isManagerMatched &&
-        (isWithinDays || latestVisit.status === 'booked')
+        (isWithinDays || latestVisit.status === 'booked') && latestVisit.status !== 'lost'
       );
     });
 
