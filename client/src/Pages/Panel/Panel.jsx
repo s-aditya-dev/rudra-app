@@ -9,10 +9,12 @@ import Maintenance from "../../Components/Maintenance/Maintenance.jsx";
 import Unauthorized from "../../Components/Unauthorized/Unauthorized.jsx";
 
 import UserList from "./Sub Pages/Users/User-list.jsx";
-import AddUser from './Sub Pages/AddUser/AddUser.jsx';
+import AddUser from "./Sub Pages/AddUser/AddUser.jsx";
 import EditUser from "./Sub Pages/EditUser/EditUser.jsx";
 import ClientList from "./Sub Pages/Client List/Client.jsx";
-import {DumpedClients} from "./Sub Pages/Dump/Dump.jsx";
+import { DumpedClients } from "./Sub Pages/Dump/Dump.jsx";
+import { NewClients } from "./Sub Pages/New Client/NewClient.jsx";
+import NewClientForm from "./Sub Pages/New Client/NewClientForm.jsx";
 import ClientListForm from "./Sub Pages/Form/Form.jsx";
 import ClientDetails from "./Sub Pages/Client Details/Client Details.jsx";
 import Remark from "./Sub Pages/Remark Details/Remark.jsx";
@@ -48,19 +50,12 @@ const Panel = () => {
   };
 
   const links = [
-    // {
-    //   name: "Dashboard",
-    //   path: "dashboard",
-    //   icon: "dashboard",
-    //   roles: ["admin", "user"],
-    // },
-    // {
-    //   name: "Analytics",
-    //   path: "analytics",
-    //   icon: "insights",
-    //   roles: ["admin", "user"],
-    // },
-    { name: "Users", path: "users", icon: "person_outline", roles: ["admin"] },
+    {
+      name: "Users",
+      path: "users",
+      icon: "person_outline",
+      roles: ["admin"]
+    },
     {
       name: "Client List",
       path: "client-list",
@@ -69,25 +64,22 @@ const Panel = () => {
     },
     {
       name: "Form",
+      path: "new-client-form",
+      icon: "receipt_long",
+      roles: ["tablet"],
+    },
+    {
+      name: "Form",
       path: "form",
       icon: "receipt_long",
       roles: ["admin", "user"],
     },
-    // { name: "Task", path: "task", icon: "inventory", roles: ["admin", "user"] },
     {
       name: "Reports",
       path: "reports",
       icon: "report_gmailerrorred",
       roles: ["admin"],
     },
-    // { name: "Page", path: "page", icon: "newspaper", roles: ["admin"] },
-    // {
-    //   name: "Tickets",
-    //   path: "tickets",
-    //   icon: "mail_outline",
-    //   roles: ["admin"],
-    // },
-    // { name: 'Settings', path: 'settings', icon: 'settings', roles: ['admin', 'user'] },
   ];
 
   const componentMapping = {
@@ -97,7 +89,9 @@ const Panel = () => {
     "add-user": AddUser,
     "edit-user/:id": EditUser,
     "client-list": ClientList,
-    "dump-list": DumpedClients,
+    "dump-client-list": DumpedClients,
+    "new-client-list": NewClients,
+    "new-client-form": NewClientForm,
     "client-details/:id": ClientDetails,
     "client-details/remark/:id": Remark,
     form: ClientListForm,
@@ -105,7 +99,6 @@ const Panel = () => {
     reports: Report,
     page: Maintenance,
     tickets: Maintenance,
-    "": ClientList,
     "*": Maintenance,
   };
 
@@ -115,41 +108,40 @@ const Panel = () => {
     setSideMenuVisible(!sideMenuVisible);
   };
 
-
-
-  // Function to toggle dark mode
   const [darkMode, setDarkMode] = useState(() => {
-    const savedDarkMode = localStorage.getItem('dark-mode');
+    const savedDarkMode = localStorage.getItem("dark-mode");
     return savedDarkMode ? JSON.parse(savedDarkMode) : false;
   });
 
   const toggleDarkMode = () => {
-    setDarkMode(prevDarkMode => {
+    setDarkMode((prevDarkMode) => {
       const newDarkMode = !prevDarkMode;
-      localStorage.setItem('dark-mode', JSON.stringify(newDarkMode));
+      localStorage.setItem("dark-mode", JSON.stringify(newDarkMode));
       return newDarkMode;
     });
   };
 
   useEffect(() => {
     if (darkMode) {
-      document.body.classList.add('dark-mode');
+      document.body.classList.add("dark-mode");
     } else {
-      document.body.classList.remove('dark-mode');
+      document.body.classList.remove("dark-mode");
     }
   }, [darkMode]);
-
-
 
   if (!currentUser) {
     return <Unauthorized />;
   }
 
-  const filteredLinks = links.filter((link) =>
-    currentUser.admin
-      ? link.roles.includes("admin")
-      : link.roles.includes("user")
-  );
+  const filteredLinks = links.filter((link) => {
+    if (!currentUser.deviceType) {
+      return currentUser.admin ? link.roles.includes("admin") : link.roles.includes("user");
+    } else {
+      return currentUser.deviceType === 'office tablet' && link.roles.includes("tablet");
+    }
+  });
+
+  const defaultComponent = currentUser.deviceType === 'office tablet' ? NewClientForm : ClientList;
 
   return (
     <div className="container">
@@ -168,6 +160,7 @@ const Panel = () => {
               element={React.createElement(componentMapping[path])}
             />
           ))}
+          <Route path="/" element={React.createElement(defaultComponent)} />
         </Routes>
       </main>
       <Nav

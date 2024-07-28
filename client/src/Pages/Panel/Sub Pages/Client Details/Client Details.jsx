@@ -352,7 +352,7 @@ const ClientDetails = () => {
 
         <div className="contact">
           {!loadPerms ? null : (
-            <span className="w-100">
+            <>
               <div className="phone w-100 input-container">
                 <label htmlFor="phone">Phone:</label>
                 <div className="flex w-100">
@@ -392,7 +392,7 @@ const ClientDetails = () => {
                 />
                 {errors.email && <span className="error">{errors.email}</span>}
               </div>
-            </span>
+            </>
           )}
 
 

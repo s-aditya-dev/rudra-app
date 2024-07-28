@@ -1,0 +1,177 @@
+.new-form-container {
+    height:max(600px, 100%);
+    width: 75%;
+    margin: 0 auto;
+    background: var(--color-white);
+    box-shadow: var(--box-shadow);
+    border-radius: var(--card-border-radius);
+    display: grid;
+    place-items: center;
+    gap: 1rem;
+    padding: 20px;
+  
+    h3 {
+      /* width: 100%; */
+      font-weight: 800;
+      font-size: clamp(1.2rem, calc(2vw + 1rem), 1.8rem);
+      padding: 10px 25px;
+      text-decoration-line: underline;
+      text-decoration-thickness: 3px;
+    }
+  }
+  
+  .new-client-form {
+    width: 100%;
+    height: max(560px, 100%);
+    overflow-x: auto;
+    margin: 0px auto;
+    padding: 25px 0;
+  
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    gap: 3%;
+    flex-wrap: wrap;
+  
+    .input-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+    }
+  
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+  
+    span {
+      margin: 5px 0;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+  
+    input,
+    select,
+    textarea {
+      padding: 10px;
+      background: var(--color-white);
+      color: var(--color-dark);
+      border: 2px solid var(--color-info-dark);
+      border-radius: var(--border-radius-1);
+      width: 100%;
+      position: relative;
+    }
+  
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--color-dark);
+    }
+  
+    textarea {
+      height: 85px;
+      resize: none;
+    }
+  
+    .w-48 {
+      width: 48%;
+    }
+  
+    .w-100 {
+      width: 100%;
+    }
+  
+    .flex {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4%;
+    }
+  
+    .col30 {
+      width: max(45%,280px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+  
+    #clientId {
+      width: 135px;
+    }
+  
+    .flex-width-48 {
+      width: 100%;
+    }
+  
+    .drop-down > div:not(:last-child,:nth-last-child(2)){
+      margin-bottom: 10px;
+    }
+  
+    button {
+      background-color: var(--color-primary);
+      color: var(--color-white);
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--border-radius-1);
+      cursor: pointer;
+    }
+  
+    button:hover {
+      background-color: var(--color-primary-dark);
+    }
+  }
+  
+  @media (width < 1200px) {
+    .new-form-container {
+      height: fit-content;
+      width: 100%;
+      margin: 50px 0;
+      padding: 10px;
+    }
+  
+    .new-client-form {
+      height: auto;
+      gap: 1.5rem;
+    }
+  }
+  
+  @media (width < 800px) {
+    .new-client-form {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .col30 {
+      width: max(200px, 85%) !important;
+    }
+  }
+  
+  @media (width < 650px) {
+    .new-client-form {
+      .sp-w-100 {
+        width: 100% !important;
+      }
+  
+      
+  
+      .flex-width-48 {
+        width: 100%;
+      }
+  
+      .drop-down.flex{
+        gap: 10px;
+      }
+    }
+  
+    .AddVisit {
+      textarea {
+        min-width: 100%;
+      }
+    }
+  }
+  

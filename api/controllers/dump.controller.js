@@ -76,3 +76,29 @@ export const getLostClients = async (req, res, next) => {
     next(err);
   }
 };
+
+export const getNewClients = async (req, res, next) => {
+  try {
+    const clients = await Client.find({}).populate({
+      path: 'clientVisits',
+      model: 'ClientVisit'
+    });
+
+    if (!clients.length) {
+      console.log('No clients found');
+      return next(createError(403, 'There is no client'));
+    }
+
+    const clientsWithoutVisits = clients.filter(client => client.clientVisits.length === 0);
+
+    if (!clientsWithoutVisits.length) {
+      console.log('No clients found without visits');
+      return next(createError(403, 'No clients without visits found'));
+    }
+
+    res.status(200).send(clientsWithoutVisits);
+  } catch (err) {
+    console.error('Error:', err);
+    next(err);
+  }
+};
