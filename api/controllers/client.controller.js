@@ -132,56 +132,8 @@ export const getClient = async (req, res, next) => {
   }
 };
 
-//filtering in specific fields
-// export const getUserClients = async (req, res, next) => {
-//   const { managerType, firstName } = req.query;
-
-//   const validManagerTypes = ['source', 'relation', 'closing'];
-
-//   if (!validManagerTypes.includes(managerType)) {
-//     return next(createError(400, 'Invalid manager type'));
-//   }
-
-//   try {
-
-//     const clients = await Client.find({})
-//       .populate({
-//         path: 'clientVisits',
-//         model: 'ClientVisit',
-//         options: { sort: { createdAt: -1 }, limit: 1 },
-//       })
-//       .exec();
-
-//     const filteredClients = clients.filter(client => {
-//       const latestVisit = client.clientVisits[0];
-//       if (!latestVisit) return false;
-
-//       switch (managerType) {
-//         case 'source':
-//           return latestVisit.sourcingManager === firstName;
-//         case 'relation':
-//           return latestVisit.relationshipManager === firstName;
-//         case 'closing':
-//           return latestVisit.closingManager === firstName;
-//         default:
-//           return false;
-//       }
-//     });
-
-//     if (!filteredClients.length) {
-//       return next(createError(403, 'No clients found for the given criteria'));
-//     }
-
-
-//     res.status(200).json(filteredClients);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-
 export const getUserClients = async (req, res, next) => {
-  const { managerType, username } = req.query;
-  const days = 30;
+  const { managerType, firstName, days = 30 } = req.query;
 
   const validManagerTypes = ['source', 'relation', 'closing'];
 
@@ -194,7 +146,7 @@ export const getUserClients = async (req, res, next) => {
       .populate({
         path: 'clientVisits',
         model: 'ClientVisit',
-        options: { sort: { createdAt: -1 }, limit: 1 },
+        options: { sort: { date: -1 }, limit: 1 },
       })
       .exec();
 
@@ -208,26 +160,30 @@ export const getUserClients = async (req, res, next) => {
       const visitDate = new Date(latestVisit.date);
       const isWithinDays = visitDate >= daysAgo;
 
-      const isManagerMatched =
-        (managerType === 'source' && latestVisit.sourcingManager === username) ||
-        (managerType === 'relation' && latestVisit.relationshipManager === username) ||
-        (managerType === 'closing' && latestVisit.closingManager === username);
+      const isManagerMatch = (
+        latestVisit.sourcingManager === firstName ||
+        latestVisit.relationshipManager === firstName ||
+        latestVisit.closingManager === firstName
+      );
 
       return (
-        isManagerMatched &&
-        (isWithinDays || latestVisit.status === 'booked') && latestVisit.status !== 'lost'
+        isManagerMatch &&
+        ((isWithinDays || latestVisit.status === 'booked') && latestVisit.status !== 'lost')
       );
     });
 
     if (!filteredClients.length) {
+      console.log('No clients found after filtering');
       return next(createError(403, 'No clients found for the given criteria'));
     }
 
     res.status(200).json(filteredClients);
   } catch (err) {
+    console.error('Error:', err);
     next(err);
   }
 };
+
 
 export const getAllVisits = async (req, res, next) => {
   try {
