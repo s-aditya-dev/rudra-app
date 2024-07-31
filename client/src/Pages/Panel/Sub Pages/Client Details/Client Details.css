@@ -216,8 +216,7 @@
       align-items: center;
       justify-content: center;
       /* color: var(--color-white); */
-      /* padding: 3px; */
-      /* font-size: 3px; */
+      padding: 3px;
       border: none;
       border-radius: var(--border-radius-1);
       cursor: pointer;

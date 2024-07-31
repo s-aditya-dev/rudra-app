@@ -542,10 +542,10 @@ const ClientDetails = () => {
                         {!loadPerms ? null : (
                           <button
                             onClick={() => handleOpenEditModal(visit._id)}
-                            className="edit yellow-btn"
+                            className="edit blue-btn"
                           >
                             <span className="material-symbols-rounded">
-                              more_horiz
+                            edit
                             </span>
                           </button>
                         )}
@@ -581,7 +581,7 @@ const ClientDetails = () => {
                         ) : null}
                         <Link to={`/panel/client-details/remark/${visit._id}`}>
                           <button
-                            className="edit blue-btn"
+                            className="edit yellow-btn"
                           >
                             <span className="material-symbols-rounded">
                               chevron_right
