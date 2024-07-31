@@ -58,6 +58,15 @@ const Remark = () => {
     }
 
     const visitRemarks = data?.visitRemarkId || [];
+
+    const sortedRemarks = visitRemarks.sort((a, b) => {
+
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+
+        return dateB - dateA;
+    }); 
+
     const closingManager = data?.closingManager || [];
     const hasAccess = currentUser.admin || currentUser.username === closingManager;
 
@@ -78,7 +87,7 @@ const Remark = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {visitRemarks.map((remark, index) => (
+                    {sortedRemarks.map((remark, index) => (
                         <tr
                             key={remark._id}
                             className={activeRemarkId === remark._id ? 'active' : ''}

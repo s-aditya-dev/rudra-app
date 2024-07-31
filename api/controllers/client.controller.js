@@ -77,8 +77,6 @@ export const createClientWithVisit = async (req, res, next) => {
 
 
 export const getClients = async (req, res, next) => {
-  const { days = 30 } = req.query;
-
   try {
     const clients = await Client.find({}).populate({
       path: 'clientVisits',
@@ -91,19 +89,9 @@ export const getClients = async (req, res, next) => {
       return next(createError(403, 'There is no client'));
     }
 
-    const currentDate = new Date();
-    const daysAgo = new Date(currentDate.setDate(currentDate.getDate() - days));
-
     const filteredClients = clients.filter(client => {
       const latestVisit = client.clientVisits[0];
-      if (!latestVisit) return false;
-
-      const visitDate = new Date(latestVisit.date);
-      const isWithinDays = visitDate >= daysAgo;
-
-      return (
-        (isWithinDays || latestVisit.status === 'booked') && latestVisit.status !== 'lost'
-      );
+      return !!latestVisit; // Keep clients that have at least one visit
     });
 
     if (!filteredClients.length) {
@@ -117,7 +105,6 @@ export const getClients = async (req, res, next) => {
     next(err);
   }
 };
-
 
 export const getClient = async (req, res, next) => {
   try {
@@ -133,7 +120,7 @@ export const getClient = async (req, res, next) => {
 };
 
 export const getUserClients = async (req, res, next) => {
-  const { managerType, firstName, days = 30 } = req.query;
+  const { managerType, firstName } = req.query;
 
   const validManagerTypes = ['source', 'relation', 'closing'];
 
@@ -150,15 +137,9 @@ export const getUserClients = async (req, res, next) => {
       })
       .exec();
 
-    const currentDate = new Date();
-    const daysAgo = new Date(currentDate.setDate(currentDate.getDate() - days));
-
     const filteredClients = clients.filter(client => {
       const latestVisit = client.clientVisits[0];
       if (!latestVisit) return false;
-
-      const visitDate = new Date(latestVisit.date);
-      const isWithinDays = visitDate >= daysAgo;
 
       const isManagerMatch = (
         latestVisit.sourcingManager === firstName ||
@@ -166,10 +147,7 @@ export const getUserClients = async (req, res, next) => {
         latestVisit.closingManager === firstName
       );
 
-      return (
-        isManagerMatch &&
-        ((isWithinDays || latestVisit.status === 'booked') && latestVisit.status !== 'lost')
-      );
+      return isManagerMatch;
     });
 
     if (!filteredClients.length) {
@@ -183,6 +161,7 @@ export const getUserClients = async (req, res, next) => {
     next(err);
   }
 };
+
 
 
 export const getAllVisits = async (req, res, next) => {
