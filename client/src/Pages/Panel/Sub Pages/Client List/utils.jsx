@@ -43,6 +43,8 @@ export const formatDate = (dateString) => {
 
 export const getStatusClass = (status) => {
   switch (status) {
+    case "hot":
+      return "status-hot";
     case "warm":
       return "status-warm";
     case "cold":

@@ -180,6 +180,8 @@ const ClientDetails = () => {
   // Get CSS class for status
   const getStatusClass = (status) => {
     switch (status) {
+      case "hot":
+        return "status-hot";
       case "warm":
         return "status-warm";
       case "cold":
@@ -252,10 +254,10 @@ const ClientDetails = () => {
     const day = String(date.getUTCDate()).padStart(2, '0');
     const month = date.toLocaleString('en-GB', { month: 'short', timeZone: 'UTC' });
     const year = String(date.getUTCFullYear()).slice(2);
-  
+
     return `${day}-${month}-${year}`;
   };
-  
+
 
 
   let count = 0;
@@ -545,7 +547,7 @@ const ClientDetails = () => {
                             className="edit blue-btn"
                           >
                             <span className="material-symbols-rounded">
-                            edit
+                              edit
                             </span>
                           </button>
                         )}
@@ -579,7 +581,7 @@ const ClientDetails = () => {
                           </button>
 
                         ) : null}
-                        <Link to={`/panel/client-details/remark/${visit._id}`}>
+                        <Link to={`/panel/client-details/${id}/remark/${visit._id}`}>
                           <button
                             className="edit yellow-btn"
                           >

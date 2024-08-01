@@ -16,19 +16,19 @@ const deleteRemark = (id, remarkId) => {
 
 const Remark = () => {
     const navigate = useNavigate();
-    const { id } = useParams();
+    const { remarkid } = useParams();
     const queryClient = useQueryClient();
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     const [activeRemarkId, setActiveRemarkId] = useState(null);
     const [isRemarkModalOpen, setIsRemarkModalOpen] = useState(false); // State for modal visibility
 
     const { isLoading, error, data } = useQuery({
-        queryKey: ["clientVisitWithRemark", id],
-        queryFn: () => fetchClientVisit(id),
+        queryKey: ["clientVisitWithRemark", remarkid],
+        queryFn: () => fetchClientVisit(remarkid),
     });
 
     const deleteRemarkMutation = useMutation({
-        mutationFn: (remarkId) => deleteRemark(id, remarkId),
+        mutationFn: (remarkId) => deleteRemark(remarkid, remarkId),
         onSuccess: () => {
             queryClient.invalidateQueries(["clientVisitWithRemark", id]);
         },
@@ -111,7 +111,7 @@ const Remark = () => {
                     ))}
                 </tbody>
             </table>
-            <AddRemarkModal isOpen={isRemarkModalOpen} onClose={() => setIsRemarkModalOpen(false)} visitID={id}/>
+            <AddRemarkModal isOpen={isRemarkModalOpen} onClose={() => setIsRemarkModalOpen(false)} visitID={remarkid}/>
         </div>
     );
 };

@@ -291,6 +291,7 @@ const EditVisitModal = ({ visitData, clientName, visitID, isOpen, onClose, isAdm
                                     Select Status
                                 </option>
                                 <option value="N/A">N/A</option>
+                                <option value="hot">Hot</option>
                                 <option value="warm">Warm</option>
                                 <option value="cold">Cold</option>
                                 <option value="lost">Lost</option>

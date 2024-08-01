@@ -76,6 +76,41 @@ export const createClientWithVisit = async (req, res, next) => {
 };
 
 
+export const getAllClients = async (req, res, next) => {
+  try {
+    const clients = await Client.find({}).populate({
+      path: 'clientVisits',
+      model: 'ClientVisit',
+      options: { sort: { date: -1 }, limit: 1 },
+      populate: {
+        path: 'visitRemarkId', // Use the correct field name for the array of remark IDs
+        model: 'VisitRemark'   // Use the correct model name for remarks
+      }
+    });
+
+    if (!clients.length) {
+      console.log('No clients found');
+      return next(createError(403, 'There is no client'));
+    }
+
+    const filteredClients = clients.filter(client => {
+      const latestVisit = client.clientVisits[0];
+      return !!latestVisit; // Keep clients that have at least one visit
+    });
+
+    if (!filteredClients.length) {
+      console.log('No clients found after filtering');
+      return next(createError(403, 'No clients found for the given criteria'));
+    }
+
+    res.status(200).send(filteredClients);
+  } catch (err) {
+    console.error('Error:', err);
+    next(err);
+  }
+};
+
+
 export const getClients = async (req, res, next) => {
   try {
     const clients = await Client.find({}).populate({

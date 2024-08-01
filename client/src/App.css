@@ -5,6 +5,8 @@
     --color-primary-dark: #5a84af;
     --color-danger: #FF0060;
     --color-dark-danger: #d30152;
+    --color-hot: #ed281d;
+    --color-dark-hot: #b52104;
     --color-success: #20c4a6;
     --color-dark-success: #177e6b;
     --color-warning: #f5d882;
@@ -71,6 +73,11 @@ label span{
 .status-lost{
     text-transform: capitalize;
     color: var(--color-danger) !important;
+}
+
+.status-hot{
+    text-transform: capitalize;
+    color: var(--color-hot) !important;
 }
 
 .status-cold{

@@ -4,6 +4,7 @@ import {
   createClient,
   getClient,
   getClients,
+  getAllClients,
   updateClient,
   deleteClientAndVisits,
 } from "../controllers/client.controller.js";
@@ -13,7 +14,8 @@ const router = express.Router();
 router.post("/withVisit", createClientWithVisit);
 router.post("/", createClient);
 router.get("/:id", getClient);
-router.get("/", getClients);
+router.get("/", getAllClients);
+router.get("/full/", getAllClients);
 router.put("/:id", updateClient);
 router.delete("/:id", deleteClientAndVisits);
 

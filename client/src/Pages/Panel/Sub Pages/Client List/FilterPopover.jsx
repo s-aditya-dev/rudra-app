@@ -13,7 +13,7 @@ const FilterPopover = ({ isOpen, onClose, onApplyFilters, managers }) => {
     const [selectedRequirements, setSelectedRequirements] = useState([]);
 
     const requirements = ['1BHK', '2BHK', '2.5BHK', '3.5BHK', '4.5BHK', 'SHOP', 'OFFICE'];
-    const statuses = ['warm', 'cold', 'lost', 'booked']; // Example statuses
+    const statuses = ['hot','warm', 'cold', 'lost', 'booked']; // Example statuses
 
     const popoverRef = useRef(null);
 

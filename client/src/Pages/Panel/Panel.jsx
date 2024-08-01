@@ -1,3 +1,4 @@
+// Panel.js
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
 import newRequest from "../../utils/newRequest.js";
@@ -93,7 +94,7 @@ const Panel = () => {
     "new-client-list": NewClients,
     "new-client-form": NewClientForm,
     "client-details/:id": ClientDetails,
-    "client-details/remark/:id": Remark,
+    "client-details/:id/remark/:remarkid": Remark,
     form: ClientListForm,
     task: Maintenance,
     reports: Report,
@@ -143,6 +144,25 @@ const Panel = () => {
 
   const defaultComponent = currentUser.deviceType === 'office tablet' ? NewClientForm : ClientList;
 
+  // Determine the back path based on the current route
+  const pathParts = location.pathname.split('/');
+let backPath = null;
+
+if (pathParts.length > 2) {
+  const secondSegment = pathParts[2];
+  if (secondSegment === 'client-details') {
+    const clientId = pathParts[3];
+    if (pathParts.length > 4 && pathParts[4] === 'remark') {
+      // If URL is in the format of `/client-details/:id/remark/:remarkid`
+      backPath = `client-details/${clientId}`;
+    } else {
+      // If URL is in the format of `/client-details/:id`
+      backPath = 'client-list';
+    }
+  }
+}
+
+
   return (
     <div className="container">
       <Sidebar
@@ -168,6 +188,7 @@ const Panel = () => {
         toggleDarkMode={toggleDarkMode}
         darkMode={darkMode}
         currentUser={currentUser}
+        backPath={backPath} // Pass the determined back path
       />
     </div>
   );
