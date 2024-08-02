@@ -390,7 +390,10 @@ table tr td:last-child::before {
 
 @media (width < 550px) {
   .client-table {
+
+table {
     --tr-padding: 10px;
+}
 
     table tr th:nth-last-child(2) {
       display: none;
