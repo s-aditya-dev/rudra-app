@@ -169,6 +169,10 @@ export const getUserClients = async (req, res, next) => {
         path: 'clientVisits',
         model: 'ClientVisit',
         options: { sort: { date: -1 }, limit: 1 },
+        populate: {
+          path: 'visitRemarkId', // Use the correct field name for the array of remark IDs
+          model: 'VisitRemark'   // Use the correct model name for remarks
+        }
       })
       .exec();
 

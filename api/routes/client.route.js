@@ -15,7 +15,6 @@ router.post("/withVisit", createClientWithVisit);
 router.post("/", createClient);
 router.get("/:id", getClient);
 router.get("/", getAllClients);
-router.get("/full/", getAllClients);
 router.put("/:id", updateClient);
 router.delete("/:id", deleteClientAndVisits);
 
