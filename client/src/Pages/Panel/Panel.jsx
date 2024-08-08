@@ -63,17 +63,17 @@ const Panel = () => {
       icon: "list_alt",
       roles: ["admin", "user"],
     },
-    {
-      name: "Form",
-      path: "new-client-form",
-      icon: "receipt_long",
-      roles: ["tablet"],
-    },
+    // {
+    //   name: "Form2",
+    //   path: "new-client-form",
+    //   icon: "receipt_long",
+    //   roles: ["tablet"],
+    // },
     {
       name: "Form",
       path: "form",
       icon: "receipt_long",
-      roles: ["admin", "user"],
+      roles: ["admin", "user", "tablet"],
     },
     {
       name: "Reports",
@@ -142,7 +142,7 @@ const Panel = () => {
     }
   });
 
-  const defaultComponent = currentUser.deviceType === 'office tablet' ? NewClientForm : ClientList;
+  const defaultComponent = currentUser.deviceType === 'office tablet' ? ClientListForm : ClientList;
 
   // Determine the back path based on the current route
   const pathParts = location.pathname.split('/');
