@@ -5,8 +5,11 @@ import newRequest from "../../../../utils/newRequest.js";
 import { Link } from "react-router-dom";
 
 import Loader from "../../../../Components/Loader/Loader.jsx";
+import Unauthorized from "../../../../Components/Unauthorized/Unauthorized";
 
 const UserList = () => {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
   const { isLoading, error, data } = useQuery({
     queryKey: ["users"],
     queryFn: () =>
@@ -60,6 +63,11 @@ const UserList = () => {
 
   if (error) {
     return <Loader message={`Something went wrong: ${error.message}`} />;
+  }
+
+
+  if (!currentUser.admin){
+    return <Unauthorized/>;
   }
 
   const handleRowClick = (UserId) => {

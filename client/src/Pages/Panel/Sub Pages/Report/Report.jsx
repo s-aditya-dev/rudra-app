@@ -5,8 +5,11 @@ import * as XLSX from 'xlsx';
 import './Report.css';
 import ExcelIcon from './Excel.jsx'
 import Loader from "../../../../Components/Loader/Loader.jsx";
+import Unauthorized from "../../../../Components/Unauthorized/Unauthorized";
 
 function Report() {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
   const { isLoading, error, data } = useQuery({
     queryKey: ["managers", "clients"],
     queryFn: () =>
@@ -90,6 +93,10 @@ function Report() {
   
   if (error || errorClients) {
     return <Loader message={`Something went wrong: ${error?.message || errorClients?.message}`} />;
+  }
+
+  if (!currentUser.admin){
+    return <Unauthorized/>;
   }
 
   return (
