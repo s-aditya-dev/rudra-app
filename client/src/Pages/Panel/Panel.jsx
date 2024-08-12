@@ -55,11 +55,11 @@ const Panel = () => {
       name: "Users",
       path: "users",
       icon: "person_outline",
-      roles: ["admin"]
+      roles: ["admin"],
     },
     {
       name: "Client List",
-      path: "client-list",
+      path: "client-list/1",
       icon: "list_alt",
       roles: ["admin", "user"],
     },
@@ -89,12 +89,12 @@ const Panel = () => {
     users: UserList,
     "add-user": AddUser,
     "edit-user/:id": EditUser,
-    "client-list": ClientList,
+    "client-list/:pageno": ClientList,
     "dump-client-list": DumpedClients,
     "new-client-list": NewClients,
     "new-client-form": NewClientForm,
-    "client-details/:id": ClientDetails,
-    "client-details/:id/remark/:remarkid": Remark,
+    "client-details/:pageno/:id": ClientDetails,
+    "client-details/:pageno/:id/remark/:remarkid": Remark,
     form: ClientListForm,
     task: Maintenance,
     reports: Report,
@@ -136,32 +136,39 @@ const Panel = () => {
 
   const filteredLinks = links.filter((link) => {
     if (!currentUser.deviceType) {
-      return currentUser.admin ? link.roles.includes("admin") : link.roles.includes("user");
+      return currentUser.admin
+        ? link.roles.includes("admin")
+        : link.roles.includes("user");
     } else {
-      return currentUser.deviceType === 'office tablet' && link.roles.includes("tablet");
+      return (
+        currentUser.deviceType === "office tablet" &&
+        link.roles.includes("tablet")
+      );
     }
   });
 
-  const defaultComponent = currentUser.deviceType === 'office tablet' ? ClientListForm : ClientList;
+  const defaultComponent =
+    currentUser.deviceType === "office tablet" ? ClientListForm : ClientList;
 
   // Determine the back path based on the current route
-  const pathParts = location.pathname.split('/');
-let backPath = null;
-
-if (pathParts.length > 2) {
-  const secondSegment = pathParts[2];
-  if (secondSegment === 'client-details') {
-    const clientId = pathParts[3];
-    if (pathParts.length > 4 && pathParts[4] === 'remark') {
-      // If URL is in the format of `/client-details/:id/remark/:remarkid`
-      backPath = `client-details/${clientId}`;
-    } else {
-      // If URL is in the format of `/client-details/:id`
-      backPath = 'client-list';
+  const pathParts = location.pathname.split("/");
+  let backPath = null;
+  
+  if (pathParts.length > 3) {
+    const secondSegment = pathParts[2];
+    if (secondSegment === "client-details") {
+      const pageNumber = pathParts[3];
+      const clientId = pathParts[4];
+      if (pathParts.length > 5 && pathParts[5] === "remark") {
+        // If URL is in the format of `/client-details/:pageno/:id/remark/:remarkid`
+        backPath = `client-details/${pageNumber}/${clientId}`;
+      } else {
+        // If URL is in the format of `/client-details/:pageno/:id`
+        backPath = `client-list/${pageNumber}`;
+      }
     }
   }
-}
-
+  
 
   return (
     <div className="container">

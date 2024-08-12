@@ -47,8 +47,7 @@ app.use("/api/users", userRoute);
 app.use("/api/clients", clientRoute);
 app.use("/api/user-clients", userClientRoute);
 
-app.use(
-  "/api/clients/:id/clientVisits",
+app.use("/api/clients/:id/clientVisits",
   (req, res, next) => {
     req.clientID = req.params.id;
     next();

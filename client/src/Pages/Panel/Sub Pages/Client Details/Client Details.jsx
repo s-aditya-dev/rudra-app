@@ -10,6 +10,7 @@ import Loader from "../../../../Components/Loader/Loader.jsx";
 
 const ClientDetails = () => {
   const navigate = useNavigate();
+  const { pageno } = useParams();
   const { id } = useParams();
   const queryClient = useQueryClient();
 
@@ -581,7 +582,7 @@ const ClientDetails = () => {
                           </button>
 
                         ) : null}
-                        <Link to={`/panel/client-details/${id}/remark/${visit._id}`}>
+                        <Link to={`/panel/client-details/${pageno}/${id}/remark/${visit._id}`}>
                           <button
                             className="edit yellow-btn"
                           >

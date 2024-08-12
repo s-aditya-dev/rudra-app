@@ -88,6 +88,28 @@ const FilterPopover = ({ isOpen, onClose, onApplyFilters, managers }) => {
 
     return (
         <div ref={popoverRef} className="filter">
+            <div className="status-selector">
+                <h5>Status:</h5>
+                <div>
+                    {statuses.map((status) => (
+                        <div key={status} className="customCheckBoxHolder">
+                            <input
+                                type="checkbox"
+                                id={status}
+                                className="customCheckBoxInput"
+                                checked={selectedStatuses.includes(status)}
+                                onChange={() => handleStatusChange(status)}
+                            />
+                            <label htmlFor={status} className="customCheckBoxWrapper">
+                                <div className={`customCheckBox ${status}`}>
+                                    <div className="inner">{status.charAt(0).toUpperCase() + status.slice(1)}</div>
+                                </div>
+                            </label>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            
             <div className="date-selector">
                 <h5>Date:</h5>
                 <div>
@@ -173,27 +195,6 @@ const FilterPopover = ({ isOpen, onClose, onApplyFilters, managers }) => {
                 </div>
             </div>
 
-            <div className="status-selector">
-                <h5>Status:</h5>
-                <div>
-                    {statuses.map((status) => (
-                        <div key={status} className="customCheckBoxHolder">
-                            <input
-                                type="checkbox"
-                                id={status}
-                                className="customCheckBoxInput"
-                                checked={selectedStatuses.includes(status)}
-                                onChange={() => handleStatusChange(status)}
-                            />
-                            <label htmlFor={status} className="customCheckBoxWrapper">
-                                <div className={`customCheckBox ${status}`}>
-                                    <div className="inner">{status.charAt(0).toUpperCase() + status.slice(1)}</div>
-                                </div>
-                            </label>
-                        </div>
-                    ))}
-                </div>
-            </div>
 
             <div className="filter-controls">
                 <button onClick={handleClearFilters}>Clear</button>

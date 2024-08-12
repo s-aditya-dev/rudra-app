@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { formatBudget, formatDate, getStatusClass, getDisplayName } from './utils';
 import { Link } from "react-router-dom";
 
-const ClientRow = ({ client, activeClientId, onRowClick, managers }) => {
+const ClientRow = ({ client, activeClientId, onRowClick, managers, currPage }) => {
   const [isLargeScreen, setIsLargeScreen] = useState(false);
 
   useEffect(() => {
@@ -68,7 +68,7 @@ const ClientRow = ({ client, activeClientId, onRowClick, managers }) => {
         </>
       )}
       <td>
-        <Link to={`/panel/client-details/${client._id}`}>
+        <Link to={`/panel/client-details/${currPage}/${client._id}`}>
           <button>
             <span className="material-symbols-rounded">chevron_right</span>
           </button>

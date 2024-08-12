@@ -15,10 +15,12 @@ const deleteRemark = (id, remarkId) => {
 };
 
 const Remark = () => {
+
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
     const navigate = useNavigate();
     const { remarkid } = useParams();
     const queryClient = useQueryClient();
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     const [activeRemarkId, setActiveRemarkId] = useState(null);
     const [isRemarkModalOpen, setIsRemarkModalOpen] = useState(false); // State for modal visibility
 
@@ -74,7 +76,7 @@ const Remark = () => {
         <div className="remark-table">
             <div className="remark-header">
                 <h2>Client Remark</h2>
-                <button onClick={() => setIsRemarkModalOpen(true)}>Add Remark</button>
+                {hasAccess && <button onClick={() => setIsRemarkModalOpen(true)}>Add Remark</button>}
             </div>
             <table>
                 <thead>
