@@ -185,6 +185,7 @@
       input {
         width: 60px;
         text-align: center;
+        border: 2px solid var(--color-dark);
       }
     }
   }

@@ -147,8 +147,7 @@ const Panel = () => {
     }
   });
 
-  const defaultComponent =
-    currentUser.deviceType === "office tablet" ? ClientListForm : ClientList;
+  const defaultComponent = Maintenance
 
   // Determine the back path based on the current route
   const pathParts = location.pathname.split("/");

@@ -89,9 +89,9 @@ const Login = () => {
         const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
         if (password=='Password'){
-          navigate(`/Panel/edit-user/${currentUser._id}`)
+          navigate(`/panel/edit-user/${currentUser._id}`)
         } else{ 
-          navigate("/Panel");
+          currentUser.deviceType === "office tablet" ? navigate("/panel/form") : navigate("/panel/client-list/1");
         }
 
       } catch (err) {
