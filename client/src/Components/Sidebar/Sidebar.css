@@ -131,7 +131,7 @@ aside .sidebar .message-count.active{
         position: fixed;
         background-color: var(--color-white);
         width: 15rem;
-        z-index: 3;
+        z-index: 50;
         box-shadow: 1rem 3rem 4rem var(--color-light);
         height: 100vh;
         left: -100%;
