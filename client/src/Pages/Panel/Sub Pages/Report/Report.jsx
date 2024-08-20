@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState, useEffect } from "react";
 import newRequest from "../../../../utils/newRequest.js";
-import * as XLSX from 'xlsx';
-import './Report.css';
-import ExcelIcon from './Excel.jsx'
+import * as XLSX from "xlsx";
+import "./Report.css";
+import ExcelIcon from "./Excel.jsx";
 import Loader from "../../../../Components/Loader/Loader.jsx";
 import Unauthorized from "../../../../Components/Unauthorized/Unauthorized";
 
@@ -16,10 +16,13 @@ function Report() {
       newRequest.get("/clientVisits/managers").then((res) => res.data),
   });
 
-  const { isLoading: isLoadingClients, error: errorClients, data: dataClients } = useQuery({
+  const {
+    isLoading: isLoadingClients,
+    error: errorClients,
+    data: dataClients,
+  } = useQuery({
     queryKey: ["clients"],
-    queryFn: () =>
-      newRequest.get("/clients").then((res) => res.data),
+    queryFn: () => newRequest.get("/clients").then((res) => res.data),
   });
 
   const [managers, setManagers] = useState([]);
@@ -34,7 +37,13 @@ function Report() {
   }, [data]);
 
   const handleRadioChange = (event) => {
-    setSelectedRadio(event.target.id);
+    const selectedRadioValue = event.target.id;
+    setSelectedRadio(selectedRadioValue);
+
+    if (selectedRadioValue === "all-clients") {
+      setSelectedType(""); // Clear the selected type
+      setSelectedEmployee(""); // Clear the selected employee
+    }
   };
 
   const handleTypeChange = (event) => {
@@ -45,8 +54,16 @@ function Report() {
   const handleEmployeeChange = (event) => {
     setSelectedEmployee(event.target.value);
   };
- 
+
   const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getUTCDate()).padStart(2, "0");
+    const month = date.toLocaleString("en-GB", {
+      month: "short",
+      timeZone: "UTC",
+    });
+    const year = String(date.getUTCFullYear()).slice(2);
+
     return `${day}-${month}-${year}`;
   };
 
@@ -55,29 +72,39 @@ function Report() {
       return;
     }
 
-    const filteredData = dataClients.filter(client => {
-      const lastVisit = client.clientVisits[client.clientVisits.length - 1] || {};
-      if (selectedType === "closing" && lastVisit.closingManager !== selectedEmployee) return false;
-      if (selectedType === "source" && lastVisit.sourcingManager !== selectedEmployee) return false;
-      if (selectedType === "relation" && lastVisit.relationshipManager !== selectedEmployee) return false;
+    const filteredData = dataClients.filter((client) => {
+      const lastVisit =
+        client.clientVisits[client.clientVisits.length - 1] || {};
+
+      // Check if the selectedEmployee matches any of the managers
+      if (
+        selectedEmployee &&
+        selectedEmployee !== lastVisit.closingManager &&
+        selectedEmployee !== lastVisit.sourcingManager &&
+        selectedEmployee !== lastVisit.relationshipManager
+      ) {
+        return false;
+      }
+
       return true;
     });
 
-    const formattedData = filteredData.map(client => {
-      const lastVisit = client.clientVisits[client.clientVisits.length - 1] || {};
+    const formattedData = filteredData.map((client) => {
+      const lastVisit =
+        client.clientVisits[client.clientVisits.length - 1] || {};
 
       return {
-        "Date": formatDate(lastVisit.date) || '',
-        "Name": `${client.firstName} ${client.lastName}`,
-        "Contact": client.contact || '',
-        "Alt Contact": client.altContact || '',
-        "Requirement": client.requirement || '',
-        "Budget": client.budget || '',
-        "Reference": lastVisit.referenceBy || '',
-        "Sourcing": lastVisit.sourcingManager || '',
-        "Relationship": lastVisit.relationshipManager || '',
-        "Closing": lastVisit.closingManager || '',
-        "Status": lastVisit.status || '',
+        Date: formatDate(lastVisit.date) || "",
+        Name: `${client.firstName} ${client.lastName}`,
+        Contact: client.contact || "",
+        "Alt Contact": client.altContact || "",
+        Requirement: client.requirement || "",
+        Budget: client.budget || "",
+        Reference: lastVisit.referenceBy || "",
+        Sourcing: lastVisit.sourcingManager || "",
+        Relationship: lastVisit.relationshipManager || "",
+        Closing: lastVisit.closingManager || "",
+        Status: lastVisit.status || "",
       };
     });
 
@@ -90,13 +117,19 @@ function Report() {
   if (isLoading || isLoadingClients) {
     return <Loader />;
   }
-  
+
   if (error || errorClients) {
-    return <Loader message={`Something went wrong: ${error?.message || errorClients?.message}`} />;
+    return (
+      <Loader
+        message={`Something went wrong: ${
+          error?.message || errorClients?.message
+        }`}
+      />
+    );
   }
 
-  if (!currentUser.admin){
-    return <Unauthorized/>;
+  if (!currentUser.admin) {
+    return <Unauthorized />;
   }
 
   return (
@@ -104,7 +137,7 @@ function Report() {
       <h2>Reports</h2>
       <div className="client-report">
         <div className="bg">
-          <ExcelIcon/>
+          <ExcelIcon />
           <h3>Client Report</h3>
         </div>
         <div className="controls flex">
@@ -161,17 +194,21 @@ function Report() {
                   <option value="" disabled>
                     Employee
                   </option>
-                  {managers.filter(manager => manager.manager === selectedType).map(manager => (
-                    <option key={manager._id} value={manager.firstName}>
-                      {manager.firstName} {manager.lastName}
-                    </option>
-                  ))}
+                  {managers
+                    .filter((manager) => manager.manager === selectedType)
+                    .map((manager) => (
+                      <option key={manager._id} value={manager.username}>
+                        {manager.firstName} {manager.lastName}
+                      </option>
+                    ))}
                 </select>
               </div>
             </div>
           )}
 
-          <button className="download" onClick={exportToExcel}>Download</button>
+          <button className="download" onClick={exportToExcel}>
+            Download
+          </button>
         </div>
       </div>
     </div>
